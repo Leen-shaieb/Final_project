@@ -63,9 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
 
 
-            )
+
           Text("Email"),
-            TextField(decoration: InputDecoration(border: ),),
+           //Leen
           ],
         ),
       ),
