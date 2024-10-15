@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-import 'Views/reg.dart';
-void main() {
-  runApp(const MyApp());
-
-
-}
-//Leen
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -19,28 +12,23 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Leen Shaieb'),
-     routes: {
-        '/firstscreen' : (context) => MyApp(),
-     },
+      home: const MyPage(title: 'Leen Shaieb'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MyPage extends StatefulWidget {
+  const MyPage({super.key, required this.title});
 
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyPage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyPage> {
   int _counter = 0;
-
-
 
   void _incrementCounter() {
    setState(() {
@@ -49,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     });
   }
+
   @override
   Widget build(BuildContext context) {
 
@@ -60,30 +49,14 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-
          child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
           Text("Email",style:TextStyle( fontSize: 20),),
            TextField(decoration: InputDecoration(
                border: OutlineInputBorder(),
                hintText: 'Email'),),
-            Text("password",style:TextStyle( fontSize: 20),),
-            TextField(decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'password'),),
 
-           /* TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () { },
-              child: Text('sign in'),
-            )*/
-            ElevatedButton(onPressed: () {
-               Navigator.pushNamed (context, '/firstscreen');
-            }, child: Text("sign in"))
 
           ],
         ),
