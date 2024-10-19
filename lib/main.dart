@@ -1,3 +1,4 @@
+import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:final_project/Views/RegisterScreen.dart';
 void main() {
@@ -62,10 +63,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+
           Text("Email",style:TextStyle( fontSize: 20),),
            TextField(decoration: InputDecoration(
                border: OutlineInputBorder(),
                hintText: 'Email'),),
+
+
             Text("password",style:TextStyle( fontSize: 20),),
             TextField(decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -82,13 +86,26 @@ class _MyHomePageState extends State<MyHomePage> {
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              onPressed: () {  
+              onPressed: () {
                 Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const Registerscreen(title: "register")),
               );
               },
               child: Text('Create new account'),
+
+            ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Homepagescreen(title: "Homepage")),
+                );
+              },
+              child: Text('Homepage'),
             )
 
           ],

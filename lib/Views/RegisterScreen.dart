@@ -1,3 +1,4 @@
+import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -29,14 +30,42 @@ class RegisterscreenPageState extends State<Registerscreen> {
 
         title: Text(widget.title),
       ),
+
       body: Center(
-         child: Column(
+        child: Column(
+
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-          Text("Email",style:TextStyle( fontSize: 20),),
-           TextField(decoration: InputDecoration(
-               border: OutlineInputBorder(),
-               hintText: 'Email'),),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Homepagescreen (title: "HomePage")),
+                );
+              },
+              child: Text('Homepage'),
+            ),
+
+
+            ListView(
+              children: const <Widget>[
+
+                ListTile(
+                  title: Text('UserName:'),
+                ),
+                ListTile(
+
+                  title: Text('email:'),
+                ),
+                ListTile(
+                  title: Text('Phone:'),
+                ),
+
+              ],
+            ),
 
 
           ],
