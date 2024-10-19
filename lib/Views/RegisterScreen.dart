@@ -1,42 +1,23 @@
 import 'package:flutter/material.dart';
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Leen',
-      theme: ThemeData(
 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
-        useMaterial3: true,
-      ),
-      home: const MyPage(title: 'Leen Shaieb'),
-    );
-  }
-}
 
-class MyPage extends StatefulWidget {
-  const MyPage({super.key, required this.title});
+
+
+class Registerscreen extends StatefulWidget {
+  const Registerscreen ({super.key, required this.title});
 
 
   final String title;
 
   @override
-  State<MyPage> createState() => _MyHomePageState();
+  State<Registerscreen> createState() => RegisterscreenPageState();
 }
 
-class _MyHomePageState extends State<MyPage> {
+class RegisterscreenPageState extends State<Registerscreen> {
   int _counter = 0;
 
-  void _incrementCounter() {
-   setState(() {
 
-      _counter++;
-
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

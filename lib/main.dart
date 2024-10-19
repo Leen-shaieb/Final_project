@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Views/reg.dart';
+import 'package:final_project/Views/RegisterScreen.dart';
 void main() {
   runApp(const MyApp());
 
@@ -20,9 +20,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Leen Shaieb'),
-     routes: {
-        '/firstscreen' : (context) => MyApp(),
-     },
     );
   }
 }
@@ -74,16 +71,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 border: OutlineInputBorder(),
                 hintText: 'password'),),
 
-           /* TextButton(
+            TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () { },
               child: Text('sign in'),
-            )*/
-            ElevatedButton(onPressed: () {
-               Navigator.pushNamed (context, '/firstscreen');
-            }, child: Text("sign in"))
+            ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {  
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Registerscreen(title: "register")),
+              );
+              },
+              child: Text('Create new account'),
+            )
 
           ],
         ),
