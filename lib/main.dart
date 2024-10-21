@@ -64,27 +64,35 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
 
-          Text("Email",style:TextStyle( fontSize: 20),),
+          Text("UserName",style:TextStyle( fontSize: 20),),
            TextField(decoration: InputDecoration(
                border: OutlineInputBorder(),
-               hintText: 'Email'),),
+               hintText: 'UserName'),),
 
 
-            Text("password",style:TextStyle( fontSize: 20),),
+            Text("Password",style:TextStyle( fontSize: 20),),
             TextField(decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'password'),),
+                hintText: 'Password'),),
 
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              onPressed: () { },
+              onPressed: () {   Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Homepagescreen(title: "Homepage")),
+              );},
               child: Text('sign in'),
             ),
+
+
+            Text("New Account?",style:TextStyle( fontSize: 20),),
+
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+
               ),
               onPressed: () {
                 Navigator.push(
@@ -95,7 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Create new account'),
 
             ),
-            TextButton(
+
+
+           /*TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
@@ -106,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: Text('Homepage'),
-            )
+            )*/
 
           ],
         ),

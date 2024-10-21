@@ -1,4 +1,5 @@
 import 'package:final_project/Views/HomePageScreen.dart';
+import 'package:final_project/Views/Register2Screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -16,7 +17,6 @@ class Registerscreen extends StatefulWidget {
 }
 
 class RegisterscreenPageState extends State<Registerscreen> {
-  int _counter = 0;
 
 
 
@@ -36,36 +36,59 @@ class RegisterscreenPageState extends State<Registerscreen> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Homepagescreen (title: "HomePage")),
-                );
-              },
-              child: Text('Homepage'),
-            ),
+          Text("First Name:", style: TextStyle(fontSize: 20),),
+            TextField(decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'First Name'),),
+
+            Text("Last Name:", style: TextStyle(fontSize: 20),),
+            TextField(decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Last Name'),),
+
+            Text("City:", style: TextStyle(fontSize: 20),),
+            TextField(decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'City'),),
+
+            Text("Email", style: TextStyle(fontSize: 20),),
+            TextField(decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Email'),),
+
+            Text("Birth Date:", style: TextStyle(fontSize: 20),),
+            TextField(decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Birth Date'),),
+
+          /*  Text("Degree:", style: TextStyle(fontSize: 20),),
+            TextField(decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Degree:'),),
+
+            Text("University:", style: TextStyle(fontSize: 20),),
+            TextField(decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'University:'),),
+
+            Text("C.V:", style: TextStyle(fontSize: 20),),
+            TextField(decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'PDF File'),),*/
 
 
-            ListView(
-              children: const <Widget>[
+        TextButton(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
 
-                ListTile(
-                  title: Text('UserName:'),
-                ),
-                ListTile(
-
-                  title: Text('email:'),
-                ),
-                ListTile(
-                  title: Text('Phone:'),
-                ),
-
-              ],
-            ),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Register2Screen(title: 'Register')),
+            );
+          },
+          child: Text('Continue'),)
 
 
           ],
