@@ -2,12 +2,12 @@ import 'package:final_project/Views/EditProfileScreen.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:final_project/Views/RegisterScreen.dart';
+
 void main() {
   runApp(const MyApp());
-
-
 }
-//Leen
+
+List<String> gender=<String>["male","Fammale"];
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Leen',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
         useMaterial3: true,
       ),
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-
   final String title;
 
   @override
@@ -38,19 +36,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-
-
   void _incrementCounter() {
-   setState(() {
-
+    setState(() {
       _counter++;
-
     });
   }
+
   @override
   Widget build(BuildContext context) {
-
+    final myController = TextEditingController();
     return Scaffold(
       /*appBar: AppBar(
 
@@ -59,68 +53,79 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),*/
       body: Center(
-
-         child: Column(
-
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
-          Text("UserName",style:TextStyle( fontSize: 20),),
-           TextField(decoration: InputDecoration(
-               border: OutlineInputBorder(),
-               hintText: 'UserName'),),
-
-
-            Text("Password",style:TextStyle( fontSize: 20),),
+            Text(
+              "UserName",
+              style: TextStyle(fontSize: 20),
+            ),
             TextField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), hintText: 'UserName'),
+            ),
+            Text(
+              "Password",
+              style: TextStyle(fontSize: 20),
+            ),
+            TextField(
+              controller: myController,
               obscureText: true,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Password'),),
-
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {   Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Homepagescreen(title: "Homepage")),
-              );},
-              child: Text('sign in'),
+                  border: OutlineInputBorder(), hintText: 'Password'),
             ),
-
-
-            Text("New Account?",style:TextStyle( fontSize: 20),),
-
+            TextButton(
+                onPressed: () => showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title:  Text(myController.text),
+                        )),
+                child: Text("data")),
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-
               ),
               onPressed: () {
                 Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const RegisterScreen(title: "register")),
-              );
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const Homepagescreen(title: "Homepage")),
+                );
+              },
+              child: Text('sign in'),
+            ),
+            Text(
+              "New Account?",
+              style: TextStyle(fontSize: 20),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const RegisterScreen(title: "register")),
+                );
               },
               child: Text('Create new account'),
-
+            ),
+            IconButton(
+              icon: Icon(Icons.person),
+              color: Colors.lightBlue,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const Editprofilescreen(title: 'EditProfile')));
+              },
             ),
 
-           IconButton(
-               icon:Icon(Icons.person),
-               color: Colors.lightBlue,
-
-               onPressed: () {
-                 Navigator.push(
-                   context,
-                   MaterialPageRoute(builder: (context)=>const Editprofilescreen(title: 'EditProfile'))
-                 );
-               },
-
-           )
-
-    /*TextButton(
+            /*TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
@@ -133,9 +138,13 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Homepage'),
             )*/
 
-    ],
-    ),
+            /*DropdownButton(
+                value: "gender",
 
+                items: items,
+                 onChanged: onChanged)*/
+          ],
+        ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
