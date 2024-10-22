@@ -1,3 +1,4 @@
+import 'package:final_project/Views/EditProfileScreen.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:final_project/Views/RegisterScreen.dart';
@@ -51,12 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
 
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
         title: Text(widget.title),
-      ),
+      ),*/
       body: Center(
 
          child: Column(
@@ -71,7 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
             Text("Password",style:TextStyle( fontSize: 20),),
-            TextField(decoration: InputDecoration(
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Password'),),
 
@@ -97,15 +100,27 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Registerscreen(title: "register")),
+                MaterialPageRoute(builder: (context) => const RegisterScreen(title: "register")),
               );
               },
               child: Text('Create new account'),
 
             ),
 
+           IconButton(
+               icon:Icon(Icons.person),
+               color: Colors.lightBlue,
 
-           /*TextButton(
+               onPressed: () {
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (context)=>const Editprofilescreen(title: 'EditProfile'))
+                 );
+               },
+
+           )
+
+    /*TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
@@ -118,8 +133,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Homepage'),
             )*/
 
-          ],
-        ),
+    ],
+    ),
+
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );

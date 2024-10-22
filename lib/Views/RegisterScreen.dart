@@ -5,18 +5,17 @@ import 'package:flutter/material.dart';
 
 
 
-
-class Registerscreen extends StatefulWidget {
-  const Registerscreen ({super.key, required this.title});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key, required this.title});
 
 
   final String title;
 
   @override
-  State<Registerscreen> createState() => RegisterscreenPageState();
+  State<RegisterScreen> createState() => RegisterScreenPageState();
 }
 
-class RegisterscreenPageState extends State<Registerscreen> {
+class RegisterScreenPageState extends State<RegisterScreen> {
 
 
 
@@ -33,10 +32,10 @@ class RegisterscreenPageState extends State<Registerscreen> {
 
       body: Center(
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-          Text("First Name:", style: TextStyle(fontSize: 20),),
+
+            Text("First Name:", style: TextStyle(fontSize: 20),),
             TextField(decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'First Name'),),
@@ -61,7 +60,7 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 border: OutlineInputBorder(),
                 hintText: 'Birth Date'),),
 
-          /*  Text("Degree:", style: TextStyle(fontSize: 20),),
+            /*Text("Degree:", style: TextStyle(fontSize: 20),),
             TextField(decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Degree:'),),
@@ -77,18 +76,21 @@ class RegisterscreenPageState extends State<Registerscreen> {
                 hintText: 'PDF File'),),*/
 
 
-        TextButton(
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
 
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const Register2Screen(title: 'Register')),
-            );
-          },
-          child: Text('Continue'),)
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Register2Screen(title: 'Register')),
+                );
+              },
+              child: Text('Continue'),),
+
+
+
 
 
           ],

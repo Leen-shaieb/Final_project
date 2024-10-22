@@ -29,6 +29,9 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+
+
+
             Text("Degree:", style: TextStyle(fontSize: 20),),
             TextField(decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -44,11 +47,31 @@ class Register2ScreenPageState extends State<Register2Screen> {
                 border: OutlineInputBorder(),
                 hintText: 'PDF File'),),
 
-            Text("PassWord:", style: TextStyle(fontSize: 20),),
-            TextField(decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'PassWord'),),
+            Text("Password",style:TextStyle( fontSize: 20),),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Password'),),
 
+            Text("Retype Password",style:TextStyle( fontSize: 20),),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Password'),),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Homepagescreen(title: 'HomePage')),
+                );
+              },
+              child: Text('Finish'),),
 
 
           ],
