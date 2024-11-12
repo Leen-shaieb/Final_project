@@ -1,3 +1,4 @@
+import 'package:final_project/Utils/db.dart';
 import 'package:final_project/Views/EditProfileScreen.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,8 @@ import 'package:final_project/Views/RegisterScreen.dart';
 
 void main() {
   runApp(const MyApp());
+
+
 }
 
 List<String> gender=<String>["male","Fammale"];
@@ -44,6 +47,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _txtUserName = TextEditingController();
+    final myController_Password = TextEditingController();
+    final myController_ = TextEditingController();
     final myController = TextEditingController();
     return Scaffold(
       /*appBar: AppBar(
@@ -61,8 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 20),
             ),
             TextField(
+              controller: _txtUserName,
               decoration: InputDecoration(
-                  border: OutlineInputBorder(), hintText: 'UserName'),
+                  border: OutlineInputBorder(), hintText: 'UserName'
+              ),
             ),
             Text(
               "Password",
@@ -75,11 +83,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   border: OutlineInputBorder(), hintText: 'Password'),
             ),
             TextButton(
-                onPressed: () => showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                          title:  Text(myController.text),
-                        )),
+                onPressed: ()  {
+
+                  insertUser(_txtUserName.text, _txtUserName.text, _txtUserName.text);
+                  /*
+                  showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title:  Text(myController_UserName.text),
+                      )),
+                   */
+                },
+
+
+
                 child: Text("data")),
             TextButton(
               style: ButtonStyle(
@@ -104,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
+                insertUser("Leen", "shaieb", "123");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -124,6 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             const Editprofilescreen(title: 'EditProfile')));
               },
             ),
+
 
             /*TextButton(
               style: ButtonStyle(

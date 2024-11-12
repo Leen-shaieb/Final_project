@@ -38,7 +38,8 @@ class RegisterScreenPageState extends State<RegisterScreen> {
             Text("First Name:", style: TextStyle(fontSize: 20),),
             TextField(decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'First Name'),),
+                hintText: 'First Name'),
+            ),
 
             Text("Last Name:", style: TextStyle(fontSize: 20),),
             TextField(decoration: InputDecoration(
