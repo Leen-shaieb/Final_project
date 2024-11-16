@@ -3,17 +3,21 @@ import 'dart:convert';
 
 class User {
   User({
-    this.id = "",
+    /*this.id = "",
     this.name = "",
     this.phone = "",
-    this.address="",
+    this.address="",*/
+this.LastName="",
 
   });
 
-  String id;
-  String name;
-  String phone;
-  String address;
+  String FirstName;
+  String LastName;
+  DateTime BithDate;
+  String Email;
+  String Degree;
+  String University;
+
 
   factory User.fromJson(Map<String, dynamic>json) =>
       User(
@@ -25,9 +29,6 @@ class User {
 
   Map<String, dynamic> toJson() =>
       {
-        "id": id,
-        "name": name,
-        "phone": phone,
-        "address":address,
+
       };
 }

@@ -48,9 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final _txtUserName = TextEditingController();
-    final myController_Password = TextEditingController();
-    final myController_ = TextEditingController();
-    final myController = TextEditingController();
+    final _txtPassword = TextEditingController();
     return Scaffold(
       /*appBar: AppBar(
 
@@ -77,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 20),
             ),
             TextField(
-              controller: myController,
+              controller: _txtPassword,
               obscureText: true,
               decoration: InputDecoration(
                   border: OutlineInputBorder(), hintText: 'Password'),

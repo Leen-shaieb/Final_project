@@ -14,7 +14,7 @@ var _conn;
 
 Future<void> showUsers() async {
   var settings = new ConnectionSettings(
-      host: 'localhost',
+      host: '10.0.2.2',
       port: 3306,
       user: 'root',
       db: 'leen12'
@@ -34,7 +34,7 @@ Future<void> showUsers() async {
 
 Future<void> insertUser(firstname,lastname, password) async {
   var settings = new ConnectionSettings(
-      host: 'localhost',
+      host: '10.0.2.2',
       port: 3306,
       user: 'root',
       db: 'leen12'
