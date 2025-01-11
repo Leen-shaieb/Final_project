@@ -1,8 +1,11 @@
+import 'dart:collection';
+
+import 'package:final_project/Models/JobModel.dart';
 import 'package:flutter/material.dart';
 
 
 class Homepagescreen extends StatefulWidget {
-  const Homepagescreen ({super.key, required this.title});
+   Homepagescreen ({super.key, required this.title});
 
   final String title;
 
@@ -11,12 +14,13 @@ class Homepagescreen extends StatefulWidget {
 }
 
 class HomepagescreenPageState extends State<Homepagescreen> {
-
-
+  List<JobModel> listofjobs1=[
+   JobModel (JobTitle:'Programmer',Location: 'Microsoft'),
+    JobModel(JobTitle:'Programmer',Location: 'Checkpoint')
+  ];
   @override
   //Widget build(BuildContext context) {
     Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
 
@@ -25,23 +29,15 @@ class HomepagescreenPageState extends State<Homepagescreen> {
         title: Text(widget.title),
       ),
 
-      body:
-         ListView(
+      body:ListView.builder(
+        itemCount:listofjobs1.length,
 
-           children:const [
-          Text('Item1',style: TextStyle(fontSize: 30,color: Colors.blueAccent
-          ),
-          ),
-             Text("-------------------------------",style:TextStyle(fontSize:50,color: Colors.pinkAccent)),
-
-             Text('Item2'),
-             Text('Item3'),
-           ],
-         )
+          itemBuilder:(BuildContext context,int index){
+          return Text(listofjobs1[index].PrintJobDetails());
+    },
 
       // This trailing comma makes auto-formatting nicer for build methods.
 
-
-    );
+    ),);
   }
 }

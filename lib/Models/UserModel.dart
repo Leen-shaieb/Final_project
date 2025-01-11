@@ -1,34 +1,55 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 
 
-class User {
-  User({
-    /*this.id = "",
-    this.name = "",
-    this.phone = "",
-    this.address="",*/
-this.LastName="",
+
+class UserModel {
+
+
+
+  UserModel(
+  {
+
+    this.FirstName="",
+    this.LastName="",
+    this.City="",
+    this.BirthDate=null,
+    this.Email="",
+    this.Degree="",
+    this.University="",
+
 
   });
-
   String FirstName;
   String LastName;
-  DateTime BithDate;
+  String City;
+  DateTime? BirthDate;
   String Email;
   String Degree;
   String University;
 
+  factory UserModel.fromJson(Map<String, dynamic>json) =>
+      UserModel(
+        FirstName: json["FirstName"],
+        LastName: json["LastName"],
+        City: json["City"],
+        BirthDate: json["BirthDate"],
+        Email: json["Email"],
+        Degree: json["Degree"],
+        University: json["University"],
 
-  factory User.fromJson(Map<String, dynamic>json) =>
-      User(
-        id: json["id"],
-        name: json["name"],
-        phone: json["phone"],
-        address: json["address"],
       );
 
   Map<String, dynamic> toJson() =>
       {
+        "FirstName":FirstName,
+        "LastName": LastName,
+        "City": City,
+        "BirthDate": BirthDate,
+        "Email": Email,
+        "Degree": Degree,
+        "Uninversity": University,
 
       };
 }
+
