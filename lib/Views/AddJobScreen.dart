@@ -100,10 +100,10 @@ class _AddJobScreenState extends State<AddJobScreen> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
 
               ),
-              onPressed: () {
+              onPressed: ()
+              {
                var jb=createjob();
                insertJob(jb);
-
               },
               child: Text('Add'),),
 

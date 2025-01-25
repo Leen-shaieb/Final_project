@@ -14,6 +14,7 @@ class UserModel {
     this.Email="",
     this.Degree="",
     this.University="",
+    this.Password="",
 
 
   });
@@ -24,6 +25,7 @@ class UserModel {
   String Email;
   String Degree;
   String University;
+  String Password;
 
 
 
@@ -38,6 +40,7 @@ class UserModel {
         Email: json["Email"],
         Degree: json["Degree"],
         University: json["University"],
+        Password: json["Password"],
 
       );
 
@@ -50,6 +53,7 @@ class UserModel {
         "Email": Email,
         "Degree": Degree,
         "Uninversity": University,
+        "Password": Password,
 
       };
 

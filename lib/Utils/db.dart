@@ -54,3 +54,14 @@ Future<void> insertJob(JobModel jb) async
   await _conn.close();
 
 }
+
+Future<Results> CheckLogin(UserModel user)async
+{
+  connectToMyDB();
+  var result= await _conn.query(
+    'select * from users where firstname=? and password=?',
+    [user.FirstName,user.Password]);
+  await _conn.close();
+  return result;
+
+}
