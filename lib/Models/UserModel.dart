@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 
 
 class UserModel {
-
-
-
   UserModel(
   {
 
@@ -27,6 +24,10 @@ class UserModel {
   String Email;
   String Degree;
   String University;
+
+
+
+
 
   factory UserModel.fromJson(Map<String, dynamic>json) =>
       UserModel(
@@ -51,5 +52,19 @@ class UserModel {
         "Uninversity": University,
 
       };
+
+
+
+
+ /* UserModel(String FirstName,String LastName,String City,String Email,String Degree,String University)
+  {
+    this.FirstName=FirstName;
+    this.LastName=LastName;
+    this.Email=Email;
+    this.University=University;
+    this.Degree=Degree;
+    this.City=City;
+  }*/
+
 }
 
