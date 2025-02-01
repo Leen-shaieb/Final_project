@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 
 class UserModel {
+
+
   UserModel(
   {
 
@@ -18,6 +20,7 @@ class UserModel {
 
 
   });
+
   String FirstName;
   String LastName;
   String City;
@@ -56,19 +59,33 @@ class UserModel {
         "Password": Password,
 
       };
-
-
-
-
- /* UserModel(String FirstName,String LastName,String City,String Email,String Degree,String University)
+  String PrintUserDetails()
   {
-    this.FirstName=FirstName;
-    this.LastName=LastName;
-    this.Email=Email;
-    this.University=University;
+    String str='';
+    str= 'First Name '+ this.FirstName;
+    str+= ' Degree: '+ this.Degree;
+    return str;
+  }
+  UserModel1(String FirstName,String Degree)
+  {
     this.Degree=Degree;
-    this.City=City;
-  }*/
+    this.FirstName=FirstName;
+    this.LastName="";
+    this.City="";
+    this.BirthDate=null;
+    this.Email="";
+    this.University="";
 
+  }
+
+
+/*
+
+  JobMode(String JobTitle,String Location)
+      {
+        this.JobTitle=JobTitle;
+      this.Location=Location;
+      }
+ */
 }
 

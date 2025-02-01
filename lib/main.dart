@@ -80,22 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: InputDecoration(
                   border: OutlineInputBorder(), hintText: 'Password'),
             ),
-            TextButton(
-                onPressed: ()  {
-
-                  insertUser(_txtUserName.text, _txtUserName.text, _txtUserName.text);
-                  /*
-                  showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title:  Text(myController_UserName.text),
-                      )),
-                   */
-                },
 
 
-
-                child: Text("data")),
             TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
@@ -129,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text('Create new account'),
             ),
-            IconButton(
+          /*  IconButton(
               icon: Icon(Icons.person),
               color: Colors.lightBlue,
               onPressed: () {
@@ -139,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         builder: (context) =>
                             const Editprofilescreen(title: 'EditProfile')));
               },
-            ),
+            ),*/
 
 
             /*TextButton(
@@ -167,3 +153,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+//                  insertUser(_txtUserName.text, _txtUserName.text, _txtUserName.text);

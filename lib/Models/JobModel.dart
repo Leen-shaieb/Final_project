@@ -15,7 +15,7 @@ class JobModel {
   String Description;
 
 
-  JobMode(String JobTitle,String Location)
+  JobModel1(String JobTitle,String Location)
       {
         this.JobTitle=JobTitle;
       this.Location=Location;

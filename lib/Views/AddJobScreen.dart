@@ -104,6 +104,10 @@ class _AddJobScreenState extends State<AddJobScreen> {
               {
                var jb=createjob();
                insertJob(jb);
+               Navigator.push(
+                 context,
+                 MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
+               );
               },
               child: Text('Add'),),
 
