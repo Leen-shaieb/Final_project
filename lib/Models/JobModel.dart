@@ -29,6 +29,16 @@ class JobModel {
   return str;
   }
 
+  ListTile Print()
+  {
+     return ListTile(
+      title: Text(this.JobTitle),
+      subtitle: Text('Location: ${this.Location}'),
+       leading: CircleAvatar(
+         child: Text(this.Description),
+       ),
+    );
+  }
  factory JobModel.fromJson(Map<String, dynamic>json) =>
      JobModel(
        JobTitle: json["JobTitle"],

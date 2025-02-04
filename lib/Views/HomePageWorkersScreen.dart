@@ -19,9 +19,11 @@ class HomepageworkersScreen extends StatefulWidget {
 class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
   var _selectedIndex=0;
 
-  List<JobModel> listofjobs1 = [
-    JobModel(JobTitle: 'Programmer', Location: 'Microsoft'),
-    JobModel(JobTitle: 'Programmer', Location: 'Ca')
+  List<JobModel> listofjobs1 =
+  [
+    JobModel(JobTitle: 'Programmer', Location: 'Microsoft',Description: 'xzzzz'),
+    JobModel(JobTitle: 'Programmer', Location: 'Ca',Description: 'xzzzz'),
+    JobModel(JobTitle: 'Programmer', Location: 'Ca',Description: 'xzzzz')
   ];
   void _onItemTapped(int index)
   {
@@ -44,6 +46,7 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
       _selectedIndex = index;
     });
   }
+
   @override
   //Widget build(BuildContext context) {
   Widget build(BuildContext context) {
@@ -52,10 +55,17 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
       body:
       ListView.builder(
         itemCount:listofjobs1.length,
-        itemBuilder:(BuildContext context,int index){
-          return Text(listofjobs1[index].PrintJobDetails());
+        itemBuilder:(BuildContext context,int index)
+        {
+          return ListTile(
+          title: Text(listofjobs1[index].JobTitle),
+          subtitle: Text('Location: ${listofjobs1[index].Location}'),
+          //leading: CircleAvatar(child: Text(listofjobs1[index].Description),),
+
+        );
         },
-      ),
+    ),
+
 
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -66,7 +76,7 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
 
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'edit Profile',
+            label: 'Workers',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -75,16 +85,14 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
       ),
 
 
-
-
-
-      // onPressed: null,
-      // child: Text("dddd"))
-      // ],
-      // )
     );
   }
 }
-
+/*ListView.builder(
+        itemCount:listofjobs1.length,
+        itemBuilder:(BuildContext context,int index){
+          return ListTile(listofjobs1[index].Print());
+        },
+      ),*/
 
 
