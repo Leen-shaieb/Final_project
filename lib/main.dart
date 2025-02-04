@@ -1,8 +1,11 @@
+import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Utils/db.dart';
 import 'package:final_project/Views/EditProfileScreen.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
+import 'package:final_project/Views/HomePageWorkersScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:final_project/Views/RegisterScreen.dart';
+import 'package:mysql1/mysql1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,6 +52,19 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final _txtUserName = TextEditingController();
     final _txtPassword = TextEditingController();
+    void Navi(int id)
+    {
+      if(id==0)
+        {Navigator.push(context,   MaterialPageRoute(
+            builder: (context) =>
+             Homepagescreen(title: "Homepage ")),);
+        }
+      if(id==1)
+      {Navigator.push(context,   MaterialPageRoute(
+          builder: (context) =>
+              HomepageworkersScreen(title: "Homepage ")),);
+      }
+    }
     return Scaffold(
       /*appBar: AppBar(
 
@@ -87,12 +103,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                           Homepagescreen(title: "Homepage")),
-                );
+                UserModel us=new UserModel(FirstName: _txtUserName.text,Password: _txtPassword.text);
+              int type=1;
+              //type =user.type
+              Navi(type);
               },
               child: Text('sign in'),
             ),
@@ -115,37 +129,10 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text('Create new account'),
             ),
-          /*  IconButton(
-              icon: Icon(Icons.person),
-              color: Colors.lightBlue,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const Editprofilescreen(title: 'EditProfile')));
-              },
-            ),*/
 
 
-            /*TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Homepagescreen(title: "Homepage")),
-                );
-              },
-              child: Text('Homepage'),
-            )*/
 
-            /*DropdownButton(
-                value: "gender",
 
-                items: items,
-                 onChanged: onChanged)*/
           ],
         ),
       ),

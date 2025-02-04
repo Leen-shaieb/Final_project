@@ -108,7 +108,6 @@ class Register2ScreenPageState extends State<Register2Screen> {
           ],
         ),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -17,7 +17,7 @@ class WorkersScreen extends StatefulWidget {
 }
 
 class WorkersScreenPageState extends State<WorkersScreen> {
-  var _selectedIndex=0;
+
 List<UserModel> listofusers=[
   UserModel(FirstName: 'a',Degree: 'a'),
   UserModel(FirstName: 'b',Degree: 'b'),

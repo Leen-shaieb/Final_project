@@ -17,7 +17,7 @@ class UserModel {
     this.Degree="",
     this.University="",
     this.Password="",
-
+    this.userType=0,
 
   });
 
@@ -29,10 +29,7 @@ class UserModel {
   String Degree;
   String University;
   String Password;
-
-
-
-
+  int userType;
 
   factory UserModel.fromJson(Map<String, dynamic>json) =>
       UserModel(
@@ -44,7 +41,7 @@ class UserModel {
         Degree: json["Degree"],
         University: json["University"],
         Password: json["Password"],
-
+        userType: json["userType"],
       );
 
   Map<String, dynamic> toJson() =>
@@ -57,6 +54,7 @@ class UserModel {
         "Degree": Degree,
         "Uninversity": University,
         "Password": Password,
+        "userType": userType,
 
       };
   String PrintUserDetails()

@@ -29,9 +29,6 @@ Future<void> showUsers() async
 }
 
 
-
-
-
 Future<void> insertUser(firstname,lastname, password) async
 {
   connectToMyDB();
@@ -63,5 +60,4 @@ Future<Results> CheckLogin(UserModel user)async
     [user.FirstName,user.Password]);
   await _conn.close();
   return result;
-
 }
