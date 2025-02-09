@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onPressed: () {
                 UserModel us=new UserModel(FirstName: _txtUserName.text,Password: _txtPassword.text);
-              int type=1;
+              int type=0 ;
               //type =user.type
               Navi(type);
               },
@@ -129,9 +129,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text('Create new account'),
             ),
-
-
-
 
           ],
         ),

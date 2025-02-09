@@ -51,8 +51,47 @@ class HomepagescreenPageState extends State<Homepagescreen> {
       body:
       ListView.builder(
         itemCount:listofjobs1.length,
-        itemBuilder:(BuildContext context,int index){
-          return Text(listofjobs1[index].PrintJobDetails());
+        itemBuilder:(BuildContext context,int index)
+        {
+          return ListTile(
+            //title: Text(listofjobs1[index].JobTitle),
+            subtitle: Column(
+              children:
+              [
+                Text('Job Title:${listofjobs1[index].JobTitle}'),
+                Text('location :${listofjobs1[index].Location} '),
+                Text('Description :${listofjobs1[index].Description} '),
+                //Navigator.push(context, route)
+                Row(
+                  children: [
+                TextButton(
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+
+                  ),
+                  onPressed: ()
+                  {
+
+                  },
+                  child: Text('edit job'),),
+                TextButton(
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+
+                  ),
+                  onPressed: ()
+                  {
+
+                  },
+                  child: Text('workers'),
+                ),
+                  ]
+                ),
+
+              ],
+            ),
+
+          );
         },
       ),
 

@@ -51,48 +51,62 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
   //Widget build(BuildContext context) {
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+
+        //title: Text(widget.title),
+        actions: <Widget>[
+    IconButton(
+    icon: const Icon(Icons.person),
+
+      onPressed: ()
+      {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>Editprofilescreen(title: 'edit profile')),
+        );
+      },
+    ),
+    ]
+    ),
 
       body:
+
       ListView.builder(
         itemCount:listofjobs1.length,
         itemBuilder:(BuildContext context,int index)
         {
           return ListTile(
-          title: Text(listofjobs1[index].JobTitle),
-          subtitle: Text('Location: ${listofjobs1[index].Location}'),
-          //leading: CircleAvatar(child: Text(listofjobs1[index].Description),),
+          //title: Text(listofjobs1[index].JobTitle),
+          subtitle: Column(
+            children:
+            [
+              Text('Job Title:${listofjobs1[index].JobTitle}'),
+              Text('location :${listofjobs1[index].Location} '),
+              Text('Description :${listofjobs1[index].Description} '),
+              //Navigator.push(context, route)
+
+              TextButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+
+                ),
+                onPressed: ()
+                {
+
+                },
+                child: Text('Apply'),),
+            ],
+          ),
 
         );
         },
     ),
 
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'new job',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Workers',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
-      ),
-
-
     );
   }
 }
-/*ListView.builder(
-        itemCount:listofjobs1.length,
-        itemBuilder:(BuildContext context,int index){
-          return ListTile(listofjobs1[index].Print());
-        },
-      ),*/
+
 
 
