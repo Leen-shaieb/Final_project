@@ -51,6 +51,7 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
   //Widget build(BuildContext context) {
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
 
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,

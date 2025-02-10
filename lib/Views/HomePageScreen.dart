@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Views/AddJobScreen.dart';
+import 'package:final_project/Views/EditjobScreen.dart';
 import 'package:final_project/Views/WorkersScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -47,6 +48,12 @@ class HomepagescreenPageState extends State<Homepagescreen> {
   //Widget build(BuildContext context) {
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+
+        title: Text(widget.title),
+      ),
 
       body:
       ListView.builder(
@@ -63,6 +70,7 @@ class HomepagescreenPageState extends State<Homepagescreen> {
                 Text('Description :${listofjobs1[index].Description} '),
                 //Navigator.push(context, route)
                 Row(
+
                   children: [
                 TextButton(
                   style: ButtonStyle(
@@ -71,7 +79,10 @@ class HomepagescreenPageState extends State<Homepagescreen> {
                   ),
                   onPressed: ()
                   {
-
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>EditJobScreen(title: 'EditJob',jb: listofjobs1[index],)),
+                    );
                   },
                   child: Text('edit job'),),
                 TextButton(
@@ -81,6 +92,7 @@ class HomepagescreenPageState extends State<Homepagescreen> {
                   ),
                   onPressed: ()
                   {
+
 
                   },
                   child: Text('workers'),
