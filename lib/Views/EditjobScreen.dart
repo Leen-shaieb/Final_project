@@ -49,14 +49,6 @@ class EditJobScreenPageState extends State<EditJobScreen> {
         {
           //jb.Description=_txtDescription.text;
         }
-
-       /* Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
-        );*/
-
-
-
       }
     }
 
@@ -70,15 +62,11 @@ class EditJobScreenPageState extends State<EditJobScreen> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-
       body: Center(
         child: Column(
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
-
-
             Text("JobTitle:", style: TextStyle(fontSize: 20),),
             TextField(
               controller: _txtJobTitle,
@@ -106,7 +94,7 @@ class EditJobScreenPageState extends State<EditJobScreen> {
 
               ),
               onPressed: () {
-                Edit();
+                //Edit();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),

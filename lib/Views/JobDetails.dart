@@ -2,35 +2,36 @@ import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Utils/Utils.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
+import 'package:final_project/Views/HomePageWorkersScreen.dart';
 import 'package:flutter/material.dart';
 
 
 
-class EditProfileScreen extends StatefulWidget {
-  EditProfileScreen({super.key, required this.title, required this.profile});
+class JobDetailsScreen extends StatefulWidget {
+  JobDetailsScreen({super.key, required this.title, required this.jb});
 
   final String title;
-  final UserModel profile;
+  final JobModel jb;
 
 
   @override
-  State<EditProfileScreen> createState() => EditProfileScreenPageState( );
+  State<JobDetailsScreen> createState() => JobDetailsScreenPageState( );
 
 
 }
 late  JobModel? jb;
 
-class EditProfileScreenPageState extends State<EditProfileScreen> {
+class JobDetailsScreenPageState extends State<JobDetailsScreen> {
 
   //final JobModel? jb;
 
 
   @override
   Widget build(BuildContext context) {
-    final _txtJobTitle=TextEditingController();
-    final _txtLocation=TextEditingController();
-    final _txtDescription=TextEditingController();
-
+    final _txtFirstName = TextEditingController();
+    final _txtLastName = TextEditingController();
+    final _txtCity = TextEditingController();
+    final _txtEmail = TextEditingController();
 
 
 
@@ -48,26 +49,27 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("JobTitle:", style: TextStyle(fontSize: 20),),
+            Text("First Name:", style: TextStyle(fontSize: 20),),
             TextField(
-              controller: _txtJobTitle,
+              controller:_txtFirstName,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'JobTitle:'),),
+                  hintText: 'First Name'),
+            ),
 
-            Text("Location:", style: TextStyle(fontSize: 20),),
+            Text("Last Name:", style: TextStyle(fontSize: 20),),
             TextField(
-              controller: _txtLocation,
+              controller: _txtLastName,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Location:'),),
+                  hintText: 'Last Name'),),
 
-            Text("Description:", style: TextStyle(fontSize: 20),),
+            Text("City:", style: TextStyle(fontSize: 20),),
             TextField(
-              controller: _txtDescription,
+              controller: _txtCity,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Description'),),
+                  hintText: 'City'),),
 
             TextButton(
               style: ButtonStyle(
@@ -78,10 +80,10 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
                 //Edit();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
+                  MaterialPageRoute(builder: (context) =>HomepageworkersScreen(title: 'HomePage')),
                 );
               },
-              child: Text('Save'),),
+              child: Text('Apply'),),
 
 
           ],

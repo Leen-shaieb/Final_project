@@ -50,6 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     final _txtUserName = TextEditingController();
     final _txtPassword = TextEditingController();
     void Navi(int id)
@@ -60,6 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
              Homepagescreen(title: "Homepage ")),);
         }
       if(id==1)
+
+
       {Navigator.push(context,   MaterialPageRoute(
           builder: (context) =>
               HomepageworkersScreen(title: "Homepage ")),);
@@ -104,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onPressed: () {
                 UserModel us=new UserModel(FirstName: _txtUserName.text,Password: _txtPassword.text);
-              int type=0 ;
+              int type=0;
               //type =user.type
               Navi(type);
               },

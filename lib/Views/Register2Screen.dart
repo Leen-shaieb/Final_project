@@ -1,7 +1,9 @@
 import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Utils/Utils.dart';
+import 'package:final_project/Utils/clientConfig.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 
 
@@ -26,6 +28,19 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
   @override
   Widget build(BuildContext context) {
+
+    Future insertUser(BuildContext context, String firstName, String lastName) async {
+
+      //   SharedPreferences prefs = await SharedPreferences.getInstance();
+      //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
+      var url = "users/insertUser.php?firstName=" + firstName + "&lastName=" + lastName;
+      final response = await http.get(Uri.parse(serverPath + url));
+       //print(serverPath + url);
+      setState(() { });
+      Navigator.pop(context);
+    }
+
+
     final _txtPassword=TextEditingController();
     final _txtRePassword=TextEditingController();
    // if(_txtRePassword.text!=_txtPassword&&_txtRePassword!="")
@@ -95,14 +110,15 @@ class Register2ScreenPageState extends State<Register2Screen> {
               ),
               onPressed: () {
 
-                insertUserFunc();
 
+                insertUser(context, '', '');
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
+
                 );
               },
-              child: Text('Finish'),),
+              child: Text('Register'),),
 
 
           ],

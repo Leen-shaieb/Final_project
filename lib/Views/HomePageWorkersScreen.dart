@@ -1,7 +1,9 @@
 import 'dart:collection';
 import 'package:final_project/Models/JobModel.dart';
+import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Views/AddJobScreen.dart';
 import 'package:final_project/Views/EditProfileScreen.dart';
+import 'package:final_project/Views/JobDetails.dart';
 import 'package:final_project/Views/WorkersScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +20,11 @@ class HomepageworkersScreen extends StatefulWidget {
 
 class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
   var _selectedIndex=0;
+  UserModel us= new UserModel();
 
   List<JobModel> listofjobs1 =
   [
-    JobModel(JobTitle: 'Programmer', Location: 'Microsoft',Description: 'xzzzz'),
+    JobModel(JobTitle: 'Programmerrrrr', Location: 'Microsoft',Description: 'xzzzz'),
     JobModel(JobTitle: 'Programmer', Location: 'Ca',Description: 'xzzzz'),
     JobModel(JobTitle: 'Programmer', Location: 'Ca',Description: 'xzzzz')
   ];
@@ -38,7 +41,7 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
     {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>Editprofilescreen(title: 'EditProfileScreen')),
+        MaterialPageRoute(builder: (context) =>EditProfileScreen(title: 'EditProfileScreen',profile:us)),
       );
     }
     setState(()
@@ -65,7 +68,7 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
       {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>Editprofilescreen(title: 'edit profile')),
+          MaterialPageRoute(builder: (context) =>EditProfileScreen(title: 'edit profile',profile: us,)),
         );
       },
     ),
@@ -95,9 +98,13 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
                 ),
                 onPressed: ()
                 {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>JobDetailsScreen(title: 'EditJob',jb: listofjobs1[index],)),
+                  );
 
                 },
-                child: Text('Apply'),),
+                child: Text('Details'),),
             ],
           ),
 
