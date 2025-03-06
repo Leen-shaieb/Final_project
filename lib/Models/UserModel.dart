@@ -57,24 +57,7 @@ class UserModel {
         "userType": userType,
 
       };
-  String PrintUserDetails()
-  {
-    String str='';
-    str= 'First Name '+ this.FirstName;
-    str+= ' Degree: '+ this.Degree;
-    return str;
-  }
-  UserModel1(String FirstName,String Degree)
-  {
-    this.Degree=Degree;
-    this.FirstName=FirstName;
-    this.LastName="";
-    this.City="";
-    this.BirthDate=null;
-    this.Email="";
-    this.University="";
 
-  }
 
 
 /*

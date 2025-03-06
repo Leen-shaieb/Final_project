@@ -118,59 +118,6 @@ class HomepagescreenPageState extends State<Homepagescreen> {
         },
       ),
 
-/*
-      body:
-      ListView.builder(
-        itemCount:listofjobs1.length,
-        itemBuilder:(BuildContext context,int index)
-        {
-          return ListTile(
-            //title: Text(listofjobs1[index].JobTitle),
-            subtitle: Column(
-              children:
-              [
-                Text('Job Title:${listofjobs1[index].JobTitle}'),
-                Text('location :${listofjobs1[index].Location} '),
-                Text('Description :${listofjobs1[index].Description} '),
-                //Navigator.push(context, route)
-                Row(
-
-                  children: [
-                TextButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-
-                  ),
-                  onPressed: ()
-                  {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>EditJobScreen(title: 'EditJob',jb: listofjobs1[index],)),
-                    );
-                  },
-                  child: Text('edit job'),),
-                TextButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-
-                  ),
-                  onPressed: ()
-                  {
-
-
-                  },
-                  child: Text('workers'),
-                ),
-                  ]
-                ),
-
-              ],
-            ),
-
-          );
-        },
-      ),
-*/
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -203,7 +150,8 @@ class HomepagescreenPageState extends State<Homepagescreen> {
     List<JobModel> arr = [];
 
     for (Map<String, dynamic> i in json.decode(response.body)) {
-      arr.add(JobModel.fromJson(i));
+      if(JobModel.fromJson(i).Location=="Microsoft")
+        arr.add(JobModel.fromJson(i));
     }
     return arr;
   }

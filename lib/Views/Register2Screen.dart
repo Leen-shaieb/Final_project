@@ -4,7 +4,7 @@ import 'package:final_project/Utils/clientConfig.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'dart:convert';
 
 
 class Register2Screen extends StatefulWidget {
@@ -25,22 +25,23 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
   // final UserModel? user;
 
-
   @override
   Widget build(BuildContext context) {
 
-    Future insertUser(BuildContext context, String firstName, String lastName) async {
+    Future insertUser(BuildContext context, UserModel user) async {
 
       //   SharedPreferences prefs = await SharedPreferences.getInstance();
       //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
-      var url = "users/insertUser.php?firstName=" + firstName + "&lastName=" + lastName;
+      var url = "users/insertUser.php?firstName=" + user.FirstName + "&lastName=" + user.LastName +"&email="+ user.Email +"&password=" +user.Password +"&userType="+ "1";
       final response = await http.get(Uri.parse(serverPath + url));
-       //print(serverPath + url);
-      setState(() { });
+      // print(serverPath + url);
+      // setState(() { });
       Navigator.pop(context);
     }
+     UserModel us= widget.lastStepUser;
 
 
+    final _txtDegree=TextEditingController();
     final _txtPassword=TextEditingController();
     final _txtRePassword=TextEditingController();
    // if(_txtRePassword.text!=_txtPassword&&_txtRePassword!="")
@@ -52,10 +53,12 @@ class Register2ScreenPageState extends State<Register2Screen> {
      // }
 
 
-    insertUserFunc()
-  {
-    //this.lastStepUser;
-  }
+    UserModel editUser(UserModel us)
+    {
+      us.Degree=_txtDegree.text;
+      us.Password=_txtPassword.text;
+      return us;
+    }
 
 
 
@@ -76,9 +79,11 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
 
             Text("Degree:", style: TextStyle(fontSize: 20),),
-            TextField(decoration: InputDecoration(
+            TextField(
+              controller: _txtDegree,
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Degree:'),),
+                hintText: 'Degree:',),),
 
             Text("University:", style: TextStyle(fontSize: 20),),
             TextField(decoration: InputDecoration(
@@ -110,10 +115,11 @@ class Register2ScreenPageState extends State<Register2Screen> {
               ),
               onPressed: () {
 
-
-                insertUser(context, '', '');
+              UserModel newus =editUser(us);
+              insertUser(context,newus );
                 Navigator.push(
                   context,
+
                   MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
 
                 );
@@ -127,3 +133,5 @@ class Register2ScreenPageState extends State<Register2Screen> {
     );
   }
 }
+
+

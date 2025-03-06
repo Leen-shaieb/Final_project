@@ -32,7 +32,7 @@ List<UserModel> listofusers=[
       ListView.builder(
         itemCount:listofusers.length,
         itemBuilder:(BuildContext context,int index){
-          return Text(listofusers[index].PrintUserDetails());
+          return Text(listofusers[index].FirstName);
         },
       ),
     );

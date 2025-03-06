@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Views/AddJobScreen.dart';
@@ -6,46 +7,48 @@ import 'package:final_project/Views/EditProfileScreen.dart';
 import 'package:final_project/Views/JobDetails.dart';
 import 'package:final_project/Views/WorkersScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:final_project/Utils/clientConfig.dart';
 
 class HomepageworkersScreen extends StatefulWidget {
-  HomepageworkersScreen ({super.key, required this.title});
+  HomepageworkersScreen({super.key, required this.title});
 
   final String title;
 
-
   @override
-  State<HomepageworkersScreen > createState() => HomepageworkersScreenPageState();
-
+  State<HomepageworkersScreen> createState() =>
+      HomepageworkersScreenPageState();
 }
 
-class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
-  var _selectedIndex=0;
-  UserModel us= new UserModel();
+class HomepageworkersScreenPageState extends State<HomepageworkersScreen> {
+  var _selectedIndex = 0;
+  UserModel us = new UserModel();
 
-  List<JobModel> listofjobs1 =
-  [
-    JobModel(JobTitle: 'Programmerrrrr', Location: 'Microsoft',Description: 'xzzzz'),
-    JobModel(JobTitle: 'Programmer', Location: 'Ca',Description: 'xzzzz'),
-    JobModel(JobTitle: 'Programmer', Location: 'Ca',Description: 'xzzzz')
+  List<JobModel> listofjobs1 = [
+    JobModel(
+        JobTitle: 'Programmerrrrr',
+        Location: 'Microsoft',
+        Description: 'xzzzz'),
+    JobModel(JobTitle: 'Programmer', Location: 'Ca', Description: 'xzzzz'),
+    JobModel(JobTitle: 'Programmer', Location: 'Ca', Description: 'xzzzz')
   ];
-  void _onItemTapped(int index)
-  {
-    if(index == 0)
-    {
+  void _onItemTapped(int index) {
+    if (index == 0) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>AddJobScreen(title: 'AddJobScreen')),
+        MaterialPageRoute(
+            builder: (context) => AddJobScreen(title: 'AddJobScreen')),
       );
     }
-    if(index == 1)
-    {
+    if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>EditProfileScreen(title: 'EditProfileScreen',profile:us)),
+        MaterialPageRoute(
+            builder: (context) =>
+                EditProfileScreen(title: 'EditProfileScreen', profile: us)),
       );
     }
-    setState(()
-    {
+    setState(() {
       _selectedIndex = index;
     });
   }
@@ -54,67 +57,102 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen > {
   //Widget build(BuildContext context) {
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          //title: Text(widget.title),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => EditProfileScreen(
+                            title: 'edit profile',
+                            profile: us,
+                          )),
+                );
+              },
+            ),
+          ]),
+      body: FutureBuilder(
+        future: getJobs(),
+        builder: (context, projectSnap) {
+          if (projectSnap.hasData) {
+            if (projectSnap.data.length == 0) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 2,
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Text('אין תוצאות',
+                        style: TextStyle(fontSize: 23, color: Colors.black))),
+              );
+            } else {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                      child: ListView.builder(
+                    itemCount: projectSnap.data.length,
+                    itemBuilder: (context, index) {
+                      JobModel project = projectSnap.data[index];
 
-        //title: Text(widget.title),
-        actions: <Widget>[
-    IconButton(
-    icon: const Icon(Icons.person),
+                      return Card(
+                          child: ListTile(
+                        // enabled: false,
+                        onTap: () {},
+                        title: Text(
+                          project.JobTitle!.toString(),
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ), // Icon(Icons.timer),
 
-      onPressed: ()
-      {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>EditProfileScreen(title: 'edit profile',profile: us,)),
-        );
-      },
-    ),
-    ]
-    ),
-
-      body:
-
-      ListView.builder(
-        itemCount:listofjobs1.length,
-        itemBuilder:(BuildContext context,int index)
-        {
-          return ListTile(
-          //title: Text(listofjobs1[index].JobTitle),
-          subtitle: Column(
-            children:
-            [
-              Text('Job Title:${listofjobs1[index].JobTitle}'),
-              Text('location :${listofjobs1[index].Location} '),
-              Text('Description :${listofjobs1[index].Description} '),
-              //Navigator.push(context, route)
-
-              TextButton(
-                style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-
-                ),
-                onPressed: ()
-                {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>JobDetailsScreen(title: 'EditJob',jb: listofjobs1[index],)),
-                  );
-
-                },
-                child: Text('Details'),),
-            ],
-          ),
-
-        );
+                        subtitle: Text(
+                          "[" + project.Location! + "]" + "\n",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                        isThreeLine: false,
+                      ));
+                    },
+                  )),
+                ],
+              );
+            }
+          } else if (projectSnap.hasError) {
+            print(projectSnap.error);
+            return Center(
+                child: Text('שגיאה, נסה שוב',
+                    style:
+                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold)));
+          }
+          return Center(
+              child: new CircularProgressIndicator(
+            color: Colors.red,
+          ));
         },
-    ),
-
+      ),
     );
   }
 }
 
+Future getJobs() async {
+  var url = "/Job/getJobs.php";
+  print(serverPath + url);
 
+  final response = await http.get(Uri.parse(serverPath + url));
+  print(serverPath + url);
+  List<JobModel> arr = [];
 
+  for (Map<String, dynamic> i in json.decode(response.body)) {
+
+    arr.add(JobModel.fromJson(i));
+  }
+  return arr;
+}
