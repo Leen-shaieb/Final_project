@@ -2,8 +2,11 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Views/AddJobScreen.dart';
-import 'package:final_project/Views/EditjobScreen.dart';
 import 'package:final_project/Views/WorkersScreen.dart';
+import 'package:final_project/Views/UsersAppliedForWork.dart';
+import 'package:final_project/Views/EditJobScreen.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:final_project/Utils/clientConfig.dart';
@@ -77,28 +80,56 @@ class HomepagescreenPageState extends State<Homepagescreen> {
                     itemCount: projectSnap.data.length,
                     itemBuilder: (context, index) {
                       JobModel project = projectSnap.data[index];
-
                       return Card(
-                          child: ListTile(
-                        // enabled: false,
-                        onTap: () {},
-                        title: Text(
-                          project.JobTitle!.toString(),
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ), // Icon(Icons.timer),
+                        child: ListTile(
+                          title: Text(
+                            project.JobName!.toString(),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          subtitle: Text(
+                            "[" + project.Location! + "]" + "\n",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          isThreeLine: false,
+                          // استخدام Row لإضافة الأزرار في أسفل كل Card
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,  // لضمان أن الأزرار تأخذ المساحة اللازمة فقط
+                            children: <Widget>[
+                              // زر لعرض المستخدمين الذين قدموا للوظيفة
+                              IconButton(
+                                icon: Icon(Icons.person),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => UsersappliedforworkScreen(title: 'Usersappliedforwork'),
+                                    ),
+                                  );
+                                },
+                              ),
+                              // زر لتعديل الوظيفة
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditJobScreen(title: 'Edit Job', jb: project,),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
 
-                            subtitle: Text(
-                              "[" + project.Location! + "]" + "\n",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                        isThreeLine: false,
-                      ));
                     },
                   )),
                 ],

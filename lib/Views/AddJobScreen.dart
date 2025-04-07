@@ -1,9 +1,10 @@
 import 'package:final_project/Models/JobModel.dart';
-import 'package:final_project/Utils/db.dart';
-import 'package:final_project/Views/EditProfileScreen.dart';
+import 'package:final_project/Utils/Utils.dart';
+import 'package:final_project/Utils/clientConfig.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:final_project/Views/RegisterScreen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main()
 {
@@ -52,10 +53,22 @@ class _AddJobScreenState extends State<AddJobScreen> {
     final _txtTitleJob = TextEditingController();
     final _txtLocation = TextEditingController();
     final _txtDescription = TextEditingController();
+
+    Future insertJob(BuildContext context, JobModel job) async {
+
+      //   SharedPreferences prefs = await SharedPreferences.getInstance();
+      //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
+      var url = "Job/insertJob.php?jobName=" + job.JobName + "&Description=" + job.Description +"&Location="+ job.Location;
+      final response = await http.get(Uri.parse(serverPath + url));
+      print(serverPath + url);
+      // setState(() { });
+      Navigator.pop(context);
+    }
+
     JobModel createjob()
     {
-      var jb=new JobModel();
-      jb.JobTitle=_txtTitleJob.text;
+      JobModel jb=new JobModel();
+      jb.JobName=_txtTitleJob.text;
       jb.Location=_txtLocation.text;
       jb.Description=_txtDescription.text;
       return jb;
@@ -102,9 +115,10 @@ class _AddJobScreenState extends State<AddJobScreen> {
               ),
               onPressed: ()
               {
-               var jb=createjob();
-               insertJob(jb);
+               JobModel jb=createjob();
+               insertJob(context,jb);
                Navigator.push(
+
                  context,
                  MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
                );

@@ -32,11 +32,15 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
       //   SharedPreferences prefs = await SharedPreferences.getInstance();
       //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
-      var url = "users/insertUser.php?firstName=" + user.FirstName + "&lastName=" + user.LastName +"&email="+ user.Email +"&password=" +user.Password +"&userType="+ "1";
+      var url = "User/insertUser.php?firstName=" + user.FirstName + "&lastName=" + user.LastName +"&email="+ user.Email +"&password=" +user.Password +"&userType="+ "1";
       final response = await http.get(Uri.parse(serverPath + url));
-      // print(serverPath + url);
+      print(serverPath + url);
       // setState(() { });
-      Navigator.pop(context);
+      // Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
+      );
     }
      UserModel us= widget.lastStepUser;
 
@@ -44,13 +48,7 @@ class Register2ScreenPageState extends State<Register2Screen> {
     final _txtDegree=TextEditingController();
     final _txtPassword=TextEditingController();
     final _txtRePassword=TextEditingController();
-   // if(_txtRePassword.text!=_txtPassword&&_txtRePassword!="")
-      //{
-    //    var uti=new Utils();
-       // uti.ShowMyDialog(context, 'Wrong Password', '');
 
-
-     // }
 
 
     UserModel editUser(UserModel us)
@@ -117,12 +115,7 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
               UserModel newus =editUser(us);
               insertUser(context,newus );
-                Navigator.push(
-                  context,
 
-                  MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
-
-                );
               },
               child: Text('Register'),),
 

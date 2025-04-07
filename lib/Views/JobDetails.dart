@@ -1,11 +1,6 @@
 import 'package:final_project/Models/JobModel.dart';
-import 'package:final_project/Models/UserModel.dart';
-import 'package:final_project/Utils/Utils.dart';
-import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:final_project/Views/HomePageWorkersScreen.dart';
 import 'package:flutter/material.dart';
-
-
 
 class JobDetailsScreen extends StatefulWidget {
   JobDetailsScreen({super.key, required this.title, required this.jb});
@@ -13,80 +8,54 @@ class JobDetailsScreen extends StatefulWidget {
   final String title;
   final JobModel jb;
 
-
   @override
-  State<JobDetailsScreen> createState() => JobDetailsScreenPageState( );
-
-
+  State<JobDetailsScreen> createState() => JobDetailsScreenPageState();
 }
-late  JobModel? jb;
 
 class JobDetailsScreenPageState extends State<JobDetailsScreen> {
-
-  //final JobModel? jb;
-
+  final _txtFirstName = TextEditingController();
+  final _txtLastName = TextEditingController();
+  final _txtCity = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final _txtFirstName = TextEditingController();
-    final _txtLastName = TextEditingController();
-    final _txtCity = TextEditingController();
-    final _txtEmail = TextEditingController();
-
-
-
-
-
-
+    // عرض تفاصيل الوظيفة مثل الاسم والموقع داخل الحقول
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("First Name:", style: TextStyle(fontSize: 20),),
-            TextField(
-              controller:_txtFirstName,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'First Name'),
-            ),
-
-            Text("Last Name:", style: TextStyle(fontSize: 20),),
-            TextField(
-              controller: _txtLastName,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Last Name'),),
-
-            Text("City:", style: TextStyle(fontSize: 20),),
-            TextField(
-              controller: _txtCity,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'City'),),
-
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              // عرض تفاصيل الوظيفة هنا
+              Text("Job Title: ${widget.jb.JobName ?? 'No Title'}", style: TextStyle(fontSize: 20)),
+              SizedBox(height: 20),
+              Text("Location: ${widget.jb.Location ?? 'No Location'}", style: TextStyle(fontSize: 20)),
+              SizedBox(height: 30),
+              Text("Description: ${widget.jb.Description ?? 'No Location'}", style: TextStyle(fontSize: 20)),
+              SizedBox(height: 30),
+              TextButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    //ضيفي عملية الي بتودي اسم المستخدم للشركة(قدم للشغل)
+                    MaterialPageRoute(
+                      builder: (context) => HomepageworkersScreen(title: 'HomePage'),
+                    ),
+                  );
+                },
+                child: Text('Apply'),
               ),
-              onPressed: () {
-                //Edit();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>HomepageworkersScreen(title: 'HomePage')),
-                );
-              },
-              child: Text('Apply'),),
-
-
-          ],
+            ],
+          ),
         ),
       ),
     );

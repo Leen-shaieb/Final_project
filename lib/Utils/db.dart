@@ -45,7 +45,7 @@ Future<void> insertJob(JobModel jb) async
   connectToMyDB();
   var result = await _conn.query(
       'insert into jobs (JobName, Location, Description) values (?, ?, ?)',
-      [jb.JobTitle,jb.Location,jb.Description]);
+      [jb.JobName,jb.Location,jb.Description]);
   print('Inserted row id=${result.insertId}');
 
   await _conn.close();

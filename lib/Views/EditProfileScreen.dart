@@ -2,6 +2,7 @@ import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Utils/Utils.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
+import 'package:final_project/Views/HomePageWorkersScreen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -27,9 +28,13 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _txtJobTitle=TextEditingController();
-    final _txtLocation=TextEditingController();
-    final _txtDescription=TextEditingController();
+    final _txtFirstName = TextEditingController();
+    final _txtLastName = TextEditingController();
+    final _txtCity = TextEditingController();
+    final _txtEmail = TextEditingController();
+    final _txtDegree=TextEditingController();
+    final _txtPassword=TextEditingController();
+    final _txtRePassword=TextEditingController();
 
 
 
@@ -48,26 +53,55 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("JobTitle:", style: TextStyle(fontSize: 20),),
+            Text("First Name:", style: TextStyle(fontSize: 20),),
             TextField(
-              controller: _txtJobTitle,
+              controller:_txtFirstName,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'JobTitle:'),),
+                  hintText: 'First Name'),
+            ),
 
-            Text("Location:", style: TextStyle(fontSize: 20),),
+            Text("Last Name:", style: TextStyle(fontSize: 20),),
             TextField(
-              controller: _txtLocation,
+              controller: _txtLastName,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Location:'),),
+                  hintText: 'Last Name'),),
 
-            Text("Description:", style: TextStyle(fontSize: 20),),
+            Text("City:", style: TextStyle(fontSize: 20),),
             TextField(
-              controller: _txtDescription,
+              controller: _txtCity,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Description'),),
+                  hintText: 'City'),),
+
+            Text("Email", style: TextStyle(fontSize: 20),),
+            TextField(
+              controller: _txtEmail,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Email'),),
+
+            Text("Degree:", style: TextStyle(fontSize: 20),),
+            TextField(
+              controller: _txtDegree,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Degree:',),),
+
+
+
+            Text("C.V:", style: TextStyle(fontSize: 20),),
+            TextField(decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'PDF File'),),
+
+            Text("Password",style:TextStyle( fontSize: 20),),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Password'),),
 
             TextButton(
               style: ButtonStyle(
@@ -78,7 +112,7 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
                 //Edit();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
+                  MaterialPageRoute(builder: (context) =>HomepageworkersScreen(title: 'HomePage')),
                 );
               },
               child: Text('Save'),),

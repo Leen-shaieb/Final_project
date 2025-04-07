@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Utils/db.dart';
 import 'package:final_project/Views/EditProfileScreen.dart';
@@ -6,6 +8,8 @@ import 'package:final_project/Views/HomePageWorkersScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:final_project/Views/RegisterScreen.dart';
 import 'package:mysql1/mysql1.dart';
+
+import 'Utils/Utils.dart';
 
 void main() {
   runApp(const MyApp());
@@ -69,15 +73,32 @@ class _MyHomePageState extends State<MyHomePage> {
               HomepageworkersScreen(title: "Homepage ")),);
       }
     }
+    checkConction() async {
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          // print('connected to internet');// print(result);// return 1;
+        }
+      } on SocketException catch (_) {
+        // print('not connected to internet');// print(result);
+        var uti = new Utils();
+        uti.ShowMyDialog(context, "אין אינטרנט", "האפליקציה דורשת חיבור לאינטרנט, נא להתחבר בבקשה");
+        return;
+      }
+    }
+    checkConction();
     return Scaffold(
       appBar: AppBar(
 
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
         title: Text(widget.title),
+
       ),
+
       body: Center(
         child: Column(
+
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
@@ -108,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onPressed: () {
                 UserModel us=new UserModel(FirstName: _txtUserName.text,Password: _txtPassword.text);
-              int type=0;
+              int type=1;
               //type =user.type
               Navi(type);
               },
