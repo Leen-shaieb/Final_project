@@ -3,7 +3,9 @@ import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Utils/Utils.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:final_project/Utils/clientConfig.dart';
 
 
 class EditJobScreen extends StatefulWidget {
@@ -31,31 +33,33 @@ class EditJobScreenPageState extends State<EditJobScreen> {
     final _txtLocation=TextEditingController();
     final _txtDescription=TextEditingController();
 
-    void Edit()
+    JobModel jb= widget.jb;
+
+void Save()
     {
-      if(jb==null)
-        return;
-      if(jb!=null)
-      {
-        if (_txtJobTitle.text != '')
-        {
-          //jb.JobTitle=_txtJobTitle.text;
-        }
-        if (_txtLocation.text != '')
-        {
-          //jb.Location=_txtLocation.text;
-        }
-        if (_txtDescription.text != '')
-        {
-          //jb.Description=_txtDescription.text;
-        }
-      }
+      _txtJobTitle.text=jb.JobName;
+      _txtLocation.text=jb.Location;
+      _txtDescription.text=jb.Description;
+
+    }
+
+    Future UpdateJob(BuildContext context) async {
+
+      //   SharedPreferences prefs = await SharedPreferences.getInstance();
+      //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
+      var url = "Job/updateJob.php?jobName=" +_txtJobTitle.text +"&Description=" + _txtDescription.text +"&Location="+ _txtLocation.text + "&jobID=" + widget.jb.jobID;
+      final response = await http.get(Uri.parse(serverPath + url));
+      print(serverPath + url);
+      // setState(() { });
+      // Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
+      );
     }
 
 
-
-
-
+Save();
     return Scaffold(
       appBar: AppBar(
 
@@ -94,7 +98,7 @@ class EditJobScreenPageState extends State<EditJobScreen> {
 
               ),
               onPressed: () {
-                //Edit();
+                UpdateJob(context);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),

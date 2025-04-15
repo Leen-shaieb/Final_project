@@ -58,11 +58,16 @@ class _AddJobScreenState extends State<AddJobScreen> {
 
       //   SharedPreferences prefs = await SharedPreferences.getInstance();
       //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
-      var url = "Job/insertJob.php?jobName=" + job.JobName + "&Description=" + job.Description +"&Location="+ job.Location;
-      final response = await http.get(Uri.parse(serverPath + url));
-      print(serverPath + url);
+      //var url = "Job/insertJob.php?jobName=" + job.JobName + "&Description=" + job.Description +"&Location="+ job.Location;
+      //final response = await http.get(Uri.parse(serverPath + url));
+     // print(serverPath + url);
       // setState(() { });
-      Navigator.pop(context);
+      Navigator.push(
+
+        context,
+        MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
+      );
+
     }
 
     JobModel createjob()
@@ -117,11 +122,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
               {
                JobModel jb=createjob();
                insertJob(context,jb);
-               Navigator.push(
 
-                 context,
-                 MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
-               );
               },
               child: Text('Add'),),
 

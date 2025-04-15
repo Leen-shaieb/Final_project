@@ -3,24 +3,16 @@ import 'package:flutter/material.dart';
 
 class JobModel {
   JobModel({
+    this.jobID="",
     this.JobName = "",
     this.Location = "",
     this.Description = "",
   });
 
+  String jobID;
   String JobName;
   String Location;
   String Description;
-
-
-
-  String PrintJobDetails() {
-    String str = '';
-    str = 'JobName: ' + this.JobName;
-    str += ' Location: ' + this.Location;
-    return str;
-  }
-
 
 //
 
@@ -34,11 +26,10 @@ class JobModel {
 
   factory JobModel.fromJson(Map<String, dynamic> json) {
     return JobModel(
+      jobID: json['jobID'],
       JobName: json['jobName'],
       Location: json['Location'],
       Description: json['Description'],
-
-
     );
   }
 

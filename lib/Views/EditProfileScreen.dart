@@ -4,7 +4,11 @@ import 'package:final_project/Utils/Utils.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:final_project/Views/HomePageWorkersScreen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:final_project/Utils/clientConfig.dart';
+import 'package:http/http.dart' as http;
 
 
 class EditProfileScreen extends StatefulWidget {
@@ -37,7 +41,20 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
     final _txtRePassword=TextEditingController();
 
 
+    Future UpdateProfile(BuildContext context) async {
 
+      //   SharedPreferences prefs = await SharedPreferences.getInstance();
+      //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
+      var url = "Job/updateJob.php?jobName=" +_txtJobTitle.text +"&Description=" + _txtDescription.text +"&Location="+ _txtLocation.text + "&jobID=" + widget.jb.jobID;
+      final response = await http.get(Uri.parse(serverPath + url));
+      print(serverPath + url);
+      // setState(() { });
+      // Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>Homepagescreen(title: 'HomePage')),
+      );
+    }
 
 
 

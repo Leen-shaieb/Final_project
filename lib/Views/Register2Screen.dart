@@ -32,7 +32,7 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
       //   SharedPreferences prefs = await SharedPreferences.getInstance();
       //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
-      var url = "User/insertUser.php?firstName=" + user.FirstName + "&lastName=" + user.LastName +"&email="+ user.Email +"&password=" +user.Password +"&userType="+ "1";
+      var url = "User/insertUser.php?firstName=" + user.FirstName + "&lastName=" + user.LastName +"&email="+ user.Email +"&password=" +user.Password +"&userType="+ "2";
       final response = await http.get(Uri.parse(serverPath + url));
       print(serverPath + url);
       // setState(() { });
@@ -55,6 +55,7 @@ class Register2ScreenPageState extends State<Register2Screen> {
     {
       us.Degree=_txtDegree.text;
       us.Password=_txtPassword.text;
+      
       return us;
     }
 

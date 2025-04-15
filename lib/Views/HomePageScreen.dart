@@ -97,23 +97,20 @@ class HomepagescreenPageState extends State<Homepagescreen> {
                                 color: Colors.black),
                           ),
                           isThreeLine: false,
-                          // استخدام Row لإضافة الأزرار في أسفل كل Card
                           trailing: Row(
-                            mainAxisSize: MainAxisSize.min,  // لضمان أن الأزرار تأخذ المساحة اللازمة فقط
+                            mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              // زر لعرض المستخدمين الذين قدموا للوظيفة
                               IconButton(
                                 icon: Icon(Icons.person),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => UsersappliedforworkScreen(title: 'Usersappliedforwork'),
+                                      builder: (context) => UsersappliedforworkScreen(title: 'Usersappliedforwork',jb: project,),
                                     ),
                                   );
                                 },
                               ),
-                              // زر لتعديل الوظيفة
                               IconButton(
                                 icon: Icon(Icons.edit),
                                 onPressed: () {

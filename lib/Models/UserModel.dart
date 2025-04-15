@@ -17,7 +17,7 @@ class UserModel {
     this.Degree="",
     this.University="",
     this.Password="",
-    this.userType=0,
+    this.userType=2,
 
   });
 
@@ -33,15 +33,8 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic>json) =>
       UserModel(
-        FirstName: json["FirstName"],
-        LastName: json["LastName"],
-        City: json["City"],
-        BirthDate: json["BirthDate"],
-        Email: json["Email"],
-        Degree: json["Degree"],
-        University: json["University"],
-        Password: json["Password"],
-        userType: json["userType"],
+        FirstName: json["firstName"],
+        Email: json["email"],
       );
 
   Map<String, dynamic> toJson() =>

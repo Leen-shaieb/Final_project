@@ -1,6 +1,6 @@
 import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Models/UserModel.dart';
-import 'package:mysql1/mysql1.dart';
+/*import 'package:mysql1/mysql1.dart';
 
 var _conn;
 
@@ -60,4 +60,4 @@ Future<Results> CheckLogin(UserModel user)async
     [user.FirstName,user.Password]);
   await _conn.close();
   return result;
-}
+}*/

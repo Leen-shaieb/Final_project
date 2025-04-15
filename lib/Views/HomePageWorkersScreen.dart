@@ -4,7 +4,7 @@ import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Views/AddJobScreen.dart';
 import 'package:final_project/Views/EditProfileScreen.dart';
-import 'package:final_project/Views/JobDetails.dart'; // استيراد صفحة تفاصيل الوظيفة
+import 'package:final_project/Views/JobDetails.dart';
 import 'package:final_project/Views/WorkersScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -95,7 +95,6 @@ class HomepageworkersScreenPageState extends State<HomepageworkersScreen> {
                         return Card(
                           child: ListTile(
                             onTap: () {
-                              // الانتقال إلى صفحة تفاصيل الوظيفة عند النقر
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

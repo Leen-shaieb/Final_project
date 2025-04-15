@@ -39,8 +39,6 @@ class RegisterScreenPageState extends State<RegisterScreen> {
       //user.BirthDate=_txtBirthDate.text;
 
 
-
-
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Register2Screen(title: 'Register',lastStepUser: user,)),
