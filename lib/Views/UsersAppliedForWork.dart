@@ -35,14 +35,11 @@ class UsersappliedforworkScreenPageState extends State<UsersappliedforworkScreen
     final response = await http.get(Uri.parse(serverPath + url));
     print(response.body);
     print(serverPath + url);
-    print('test');
     List<UserModel> arr = [];
 
     for (Map<String, dynamic> i in json.decode(response.body)) {
-      print("gggg");
       arr.add(UserModel.fromJson(i));
     }
-    print('rrrr');
     return arr;
   }
   @override

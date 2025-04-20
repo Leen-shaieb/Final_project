@@ -1,15 +1,17 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'package:final_project/Models/CompanyModel.dart';
 import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Views/AddJobScreen.dart';
 import 'package:final_project/Views/WorkersScreen.dart';
 import 'package:final_project/Views/UsersAppliedForWork.dart';
 import 'package:final_project/Views/EditJobScreen.dart';
-
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:final_project/Utils/clientConfig.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Models/CheckLoginModel.dart';
 
 class Homepagescreen extends StatefulWidget {
   Homepagescreen({super.key, required this.title});
@@ -23,12 +25,6 @@ class Homepagescreen extends StatefulWidget {
 class HomepagescreenPageState extends State<Homepagescreen> {
   var _selectedIndex = 0;
 
-  /*
-  List<JobModel> listofjobs1 = [
-    JobModel(JobTitle: 'Programmer', Location: 'Microsoft'),
-    JobModel(JobTitle: 'Programmer', Location: 'Checkpoint')
-  ];
-   */
   void _onItemTapped(int index) {
     if (index == 0) {
       Navigator.push(
@@ -50,74 +46,92 @@ class HomepagescreenPageState extends State<Homepagescreen> {
   }
 
   @override
-  //Widget build(BuildContext context) {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(widget.title, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
       ),
-
-      body: FutureBuilder(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: FutureBuilder<List<JobModel>>(
         future: getJobs(),
         builder: (context, projectSnap) {
-          if (projectSnap.hasData) {
-            if (projectSnap.data.length == 0) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 2,
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Text('אין תוצאות',
-                        style: TextStyle(fontSize: 23, color: Colors.black))),
-              );
-            } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                      child: ListView.builder(
-                    itemCount: projectSnap.data.length,
+          if (projectSnap.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            );
+          } else if (projectSnap.hasError) {
+            print(projectSnap.error);
+            return Center(
+              child: Text('שגיאה, נסה שוב',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onBackground)),
+            );
+          } else if (!projectSnap.hasData || projectSnap.data!.isEmpty) {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height * 2,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text('אין תוצאות',
+                    style: TextStyle(fontSize: 23, color: Theme.of(context).colorScheme.onBackground)),
+              ),
+            );
+          } else {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: projectSnap.data!.length,
                     itemBuilder: (context, index) {
-                      JobModel project = projectSnap.data[index];
+                      JobModel project = projectSnap.data![index];
                       return Card(
+                        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        color: Colors.white, // You might want to adjust this based on your lilac theme
                         child: ListTile(
+                          contentPadding: const EdgeInsets.all(16.0),
                           title: Text(
                             project.JobName!.toString(),
                             style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                                color: Theme.of(context).colorScheme.onSurface),
                           ),
-                          subtitle: Text(
-                            "[" + project.Location! + "]" + "\n",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              "[${project.Location!}]",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7)),
+                            ),
                           ),
                           isThreeLine: false,
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               IconButton(
-                                icon: Icon(Icons.person),
+                                icon: Icon(Icons.person, color: Theme.of(context).colorScheme.secondary),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => UsersappliedforworkScreen(title: 'Usersappliedforwork',jb: project,),
+                                      builder: (context) => UsersappliedforworkScreen(title: 'Usersappliedforwork', jb: project),
                                     ),
                                   );
                                 },
                               ),
                               IconButton(
-                                icon: Icon(Icons.edit),
+                                icon: Icon(Icons.edit, color: Theme.of(context).colorScheme.primary),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => EditJobScreen(title: 'Edit Job', jb: project,),
+                                      builder: (context) => EditJobScreen(title: 'Edit Job', jb: project),
                                     ),
                                   );
                                 },
@@ -126,60 +140,81 @@ class HomepagescreenPageState extends State<Homepagescreen> {
                           ),
                         ),
                       );
-
                     },
-                  )),
-                ],
-              );
-            }
-          } else if (projectSnap.hasError) {
-            print(projectSnap.error);
-            return Center(
-                child: Text('שגיאה, נסה שוב',
-                    style:
-                        TextStyle(fontSize: 22, fontWeight: FontWeight.bold)));
+                  ),
+                ),
+              ],
+            );
           }
-          return Center(
-              child: new CircularProgressIndicator(
-            color: Colors.red,
-          ));
         },
       ),
-
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add, color: _selectedIndex == 0 ? Theme.of(context).colorScheme.secondary : Colors.grey),
             label: 'new job',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person, color: _selectedIndex == 1 ? Theme.of(context).colorScheme.secondary : Colors.grey),
             label: 'Workers',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Theme.of(context).colorScheme.secondary,
+        unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
+        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
-
-      // onPressed: null,
-      // child: Text("dddd"))
-      // ],
-      // )
     );
   }
 
-  Future getJobs() async {
-    var url = "/Job/getJobs.php";
+  Future<CompanyModel> getCompany() async {
+    print("gg");
+    SharedPreferences prefs2 = await SharedPreferences.getInstance();
+    int? companyID = await prefs2.getInt('companyID');
+    var url = "Company/getCompanyDetails.php?companyID=" + companyID.toString();
     print(serverPath + url);
 
     final response = await http.get(Uri.parse(serverPath + url));
+    print("Response body: ${response.body}");
+
+    // This is the key part - properly decode as a list first
+    List<dynamic> jsonList = json.decode(response.body) as List<dynamic>;
+
+    // Check if we have data
+    if (jsonList.isEmpty) {
+      throw Exception("No company data found");
+    }
+
+    // Extract the first company as a Map
+    Map<String, dynamic> companyData = jsonList[0];
+
+    // Create the CompanyModel directly
+    return CompanyModel(
+        companyID: companyData['companyID'],
+        companyName: companyData['companyName'],
+        location: companyData['location']
+    );
+  }
+  Future<List<JobModel>> getJobs() async {
+    var url = "/Job/getJobs.php";
+    print(serverPath + url);
+    print("gghh");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+  print("gg");
+    final response = await http.get(Uri.parse(serverPath + url));
+    print(response.body);
     print(serverPath + url);
     List<JobModel> arr = [];
+  CompanyModel cm= await getCompany();
 
+print(cm.companyName);
     for (Map<String, dynamic> i in json.decode(response.body)) {
-      if(JobModel.fromJson(i).Location=="Microsoft")
+      print(i);
+      if (JobModel.fromJson(i).companyID ==cm.companyID){
+        print("hh");
         arr.add(JobModel.fromJson(i));
+      }
     }
     return arr;
   }

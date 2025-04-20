@@ -7,12 +7,14 @@ class JobModel {
     this.JobName = "",
     this.Location = "",
     this.Description = "",
+    this.companyID=0,
   });
 
   String jobID;
   String JobName;
   String Location;
   String Description;
+  int? companyID;
 
 //
 
@@ -27,6 +29,7 @@ class JobModel {
   factory JobModel.fromJson(Map<String, dynamic> json) {
     return JobModel(
       jobID: json['jobID'],
+      companyID: json['companyID'],
       JobName: json['jobName'],
       Location: json['Location'],
       Description: json['Description'],

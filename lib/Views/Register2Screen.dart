@@ -32,6 +32,7 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
       //   SharedPreferences prefs = await SharedPreferences.getInstance();
       //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
+
       var url = "User/insertUser.php?firstName=" + user.FirstName + "&lastName=" + user.LastName +"&email="+ user.Email +"&password=" +user.Password +"&userType="+ "2";
       final response = await http.get(Uri.parse(serverPath + url));
       print(serverPath + url);
@@ -46,16 +47,28 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
 
     final _txtDegree=TextEditingController();
+    final _txtUniversity=TextEditingController();
+    final _txtCV=TextEditingController();
     final _txtPassword=TextEditingController();
     final _txtRePassword=TextEditingController();
 
 
+    bool CheckPassword()
+    {
+      if(_txtPassword.text!=_txtRePassword.text)
+      {
+        var uti = new Utils();
+        uti.ShowMyDialog(context, "", "Retype your password");
+        return false;
+      }
+      return true;
+    }
 
     UserModel editUser(UserModel us)
     {
       us.Degree=_txtDegree.text;
+      us.University=_txtUniversity.text;
       us.Password=_txtPassword.text;
-      
       return us;
     }
 
@@ -85,7 +98,9 @@ class Register2ScreenPageState extends State<Register2Screen> {
                 hintText: 'Degree:',),),
 
             Text("University:", style: TextStyle(fontSize: 20),),
-            TextField(decoration: InputDecoration(
+            TextField(
+              controller: _txtUniversity,
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'University:'),),
 
@@ -96,6 +111,8 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
             Text("Password",style:TextStyle( fontSize: 20),),
             TextField(
+              controller: _txtPassword,
+
               obscureText: true,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -103,6 +120,8 @@ class Register2ScreenPageState extends State<Register2Screen> {
 
             Text("Retype Password",style:TextStyle( fontSize: 20),),
             TextField(
+              controller: _txtRePassword,
+
               obscureText: true,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -115,7 +134,10 @@ class Register2ScreenPageState extends State<Register2Screen> {
               onPressed: () {
 
               UserModel newus =editUser(us);
-              insertUser(context,newus );
+              if(CheckPassword())
+                {
+                insertUser(context,newus );
+                }
 
               },
               child: Text('Register'),),

@@ -45,9 +45,9 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
 
       //   SharedPreferences prefs = await SharedPreferences.getInstance();
       //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
-      var url = "Job/updateJob.php?jobName=" +_txtJobTitle.text +"&Description=" + _txtDescription.text +"&Location="+ _txtLocation.text + "&jobID=" + widget.jb.jobID;
-      final response = await http.get(Uri.parse(serverPath + url));
-      print(serverPath + url);
+    //  var url = "Job/updateJob.php?jobName=" +_txtJobTitle.text +"&Description=" + _txtDescription.text +"&Location="+ _txtLocation.text + "&jobID=" + widget.jb.jobID;
+      //final response = await http.get(Uri.parse(serverPath + url));
+    //  print(serverPath + url);
       // setState(() { });
       // Navigator.pop(context);
       Navigator.push(
@@ -70,7 +70,7 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("First Name:", style: TextStyle(fontSize: 20),),
+            Text("User Name:", style: TextStyle(fontSize: 20),),
             TextField(
               controller:_txtFirstName,
               decoration: InputDecoration(
@@ -78,12 +78,6 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
                   hintText: 'First Name'),
             ),
 
-            Text("Last Name:", style: TextStyle(fontSize: 20),),
-            TextField(
-              controller: _txtLastName,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Last Name'),),
 
             Text("City:", style: TextStyle(fontSize: 20),),
             TextField(
@@ -105,7 +99,6 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Degree:',),),
-
 
 
             Text("C.V:", style: TextStyle(fontSize: 20),),
