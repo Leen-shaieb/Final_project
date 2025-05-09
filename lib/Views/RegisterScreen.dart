@@ -1,118 +1,90 @@
 import 'package:final_project/Models/UserModel.dart';
-import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:final_project/Views/Register2Screen.dart';
 import 'package:flutter/material.dart';
-
-
-
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key, required this.title});
 
-
   final String title;
 
   @override
-  State<RegisterScreen> createState() => RegisterScreenPageState();
+  State<RegisterScreen> createState() => _RegisterScreenPageState();
 }
 
-class RegisterScreenPageState extends State<RegisterScreen> {
+class _RegisterScreenPageState extends State<RegisterScreen> {
+  final _txtFirstName = TextEditingController();
+  final _txtLastName = TextEditingController();
+  final _txtCity = TextEditingController();
+  final _txtEmail = TextEditingController();
 
+  void saveStep() {
+    var user = UserModel();
+    user.FirstName = _txtFirstName.text;
+    user.LastName = _txtLastName.text;
+    user.City = _txtCity.text;
+    user.Email = _txtEmail.text;
 
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Register2Screen(title: 'Register', lastStepUser: user),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    final _txtFirstName = TextEditingController();
-    final _txtLastName = TextEditingController();
-    final _txtCity = TextEditingController();
-    final _txtEmail = TextEditingController();
-    //final _txtBirthDate =
-
-
-    void saveStep()
-    {
-      var user = new UserModel();
-      user.FirstName = _txtFirstName.text;
-      user.LastName=_txtLastName.text;
-      user.Email=_txtEmail.text;
-      user.City=_txtLastName.text;
-      //user.BirthDate=_txtBirthDate.text;
-
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Register2Screen(title: 'Register',lastStepUser: user,)),
-      );
-    }
-
-
-
     return Scaffold(
       appBar: AppBar(
-
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(widget.title),
       ),
-
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-
-            Text("First Name:", style: TextStyle(fontSize: 20),),
+          children: [
             TextField(
-              controller:_txtFirstName,
-              decoration: InputDecoration(
+              controller: _txtFirstName,
+              decoration: const InputDecoration(
+                labelText: 'First Name',
                 border: OutlineInputBorder(),
-                hintText: 'First Name'),
+              ),
             ),
-
-            Text("Last Name:", style: TextStyle(fontSize: 20),),
+            const SizedBox(height: 15),
             TextField(
               controller: _txtLastName,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
+                labelText: 'Last Name',
                 border: OutlineInputBorder(),
-                hintText: 'Last Name'),),
-
-            Text("City:", style: TextStyle(fontSize: 20),),
+              ),
+            ),
+            const SizedBox(height: 15),
             TextField(
               controller: _txtCity,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
+                labelText: 'City',
                 border: OutlineInputBorder(),
-                hintText: 'City'),),
-
-            Text("Email", style: TextStyle(fontSize: 20),),
+              ),
+            ),
+            const SizedBox(height: 15),
             TextField(
               controller: _txtEmail,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
+                labelText: 'Email',
                 border: OutlineInputBorder(),
-                hintText: 'Email'),),
-
-            Text("Birth Date:", style: TextStyle(fontSize: 20),),
-            TextField(
-              //controller: _txtBirthDate,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Birth Date'),),
-
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-
               ),
-              onPressed: () {
-                saveStep();
-              },
-              child: Text('Continue'),),
-
-
-
-
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: saveStep,
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              child: const Text('Continue', style: TextStyle(fontSize: 18)),
+            ),
           ],
         ),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

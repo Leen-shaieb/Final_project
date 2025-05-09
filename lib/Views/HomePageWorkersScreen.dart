@@ -1,158 +1,125 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Views/AddJobScreen.dart';
 import 'package:final_project/Views/EditProfileScreen.dart';
 import 'package:final_project/Views/JobDetails.dart';
-import 'package:final_project/Views/WorkersScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:final_project/Utils/clientConfig.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomepageworkersScreen extends StatefulWidget {
-  HomepageworkersScreen({super.key, required this.title});
+  const HomepageworkersScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<HomepageworkersScreen> createState() =>
-      HomepageworkersScreenPageState();
+  State<HomepageworkersScreen> createState() => _HomepageworkersScreenPageState();
 }
 
-class HomepageworkersScreenPageState extends State<HomepageworkersScreen> {
-  var _selectedIndex = 0;
-  UserModel us = new UserModel();
-
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => AddJobScreen(title: 'AddJobScreen')),
-      );
-    }
-    if (index == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                EditProfileScreen(title: 'EditProfileScreen', profile: us)),
-      );
-    }
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+class _HomepageworkersScreenPageState extends State<HomepageworkersScreen> {
+  UserModel us = UserModel();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: <Widget>[
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(widget.title, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+        actions: [
           IconButton(
             icon: const Icon(Icons.person),
+            color: Theme.of(context).colorScheme.onPrimary,
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => EditProfileScreen(
-                      title: 'edit profile',
-                      profile: us,
-                    )),
+                MaterialPageRoute(builder: (context) => EditProfileScreen(title: 'Edit Profile', profile: us)),
               );
             },
           ),
         ],
       ),
-      body: FutureBuilder(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: FutureBuilder<List<JobModel>>(
         future: getJobs(),
-        builder: (context, projectSnap) {
-          if (projectSnap.hasData) {
-            if (projectSnap.data.length == 0) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 2,
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'אין תוצאות',
-                    style: TextStyle(fontSize: 23, color: Colors.black),
-                  ),
-                ),
-              );
-            } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: projectSnap.data.length,
-                      itemBuilder: (context, index) {
-                        JobModel project = projectSnap.data[index];
-
-                        return Card(
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JobDetailsScreen(title:"jobdetails", jb:project),
-                                ),
-                              );
-                            },
-                            title: Text(
-                              project.JobName!.toString(),
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            subtitle: Text(
-                              "[" + project.Location! + "]" + "\n",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            isThreeLine: false,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.deepPurple),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('שגיאה, נסה שוב', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.red)),
+            );
+          } else if (snapshot.hasData) {
+            var jobs = snapshot.data!;
+            if (jobs.isEmpty) {
+              return Center(
+                child: Text('אין תוצאות', style: TextStyle(fontSize: 23, color: Theme.of(context).colorScheme.onBackground)),
               );
             }
-          } else if (projectSnap.hasError) {
-            print(projectSnap.error);
-            return Center(
-                child: Text('שגיאה, נסה שוב',
-                    style:
-                    TextStyle(fontSize: 22, fontWeight: FontWeight.bold)));
+            return ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: jobs.length,
+              itemBuilder: (context, index) {
+                JobModel job = jobs[index];
+                return Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8.0),
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(16.0),
+                    title: Text(
+                      job.JobName ?? '',
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      job.Location != null ? "[${job.Location}]" : '',
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => JobDetailsScreen(title: "Job Details", jb: job)),
+                      );
+                    },
+                  ),
+                );
+              },
+            );
+          } else {
+            return const Center(child: Text('לא נמצאו נתונים'));
           }
-          return Center(
-            child: new CircularProgressIndicator(
-              color: Colors.red,
-            ),
-          );
         },
       ),
+      /*floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        foregroundColor: Theme.of(context).colorScheme.onSecondary,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddJobScreen(title: 'Add New Job')),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),*/
     );
   }
 }
 
-Future getJobs() async {
-  var url = "/Job/getJobs.php";
+Future<List<JobModel>> getJobs() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var ffg= await prefs.getInt("DegreeID");
+  var url = "/Job/getJobs.php?DegreeID=$ffg";
   print(serverPath + url);
 
   final response = await http.get(Uri.parse(serverPath + url));
-  print(serverPath + url);
-  List<JobModel> arr = [];
-
-  for (Map<String, dynamic> i in json.decode(response.body)) {
-    arr.add(JobModel.fromJson(i));
+  if (response.statusCode == 200) {
+    List arr = json.decode(response.body);
+    return arr.map((e) => JobModel.fromJson(e)).toList();
+  } else {
+    throw Exception('Failed to load jobs');
   }
-  return arr;
 }

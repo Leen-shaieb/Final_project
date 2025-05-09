@@ -45,9 +45,9 @@ class EditProfileScreenPageState extends State<EditProfileScreen> {
 
       //   SharedPreferences prefs = await SharedPreferences.getInstance();
       //  String? getInfoDeviceSTR = prefs.getString("getInfoDeviceSTR");
-    //  var url = "Job/updateJob.php?jobName=" +_txtJobTitle.text +"&Description=" + _txtDescription.text +"&Location="+ _txtLocation.text + "&jobID=" + widget.jb.jobID;
+      //  var url = "Job/updateJob.php?jobName=" +_txtJobTitle.text +"&Description=" + _txtDescription.text +"&Location="+ _txtLocation.text + "&jobID=" + widget.jb.jobID;
       //final response = await http.get(Uri.parse(serverPath + url));
-    //  print(serverPath + url);
+      //  print(serverPath + url);
       // setState(() { });
       // Navigator.pop(context);
       Navigator.push(

@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Leen Shaieb'),
+      home: const MyHomePage(title: 'Sign in'),
     );
   }
 }
@@ -112,8 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Future checkLogin(BuildContext context) async {
       if(_txtPassword.text != "" && _txtUserName.text != "") {
-        var url = "login/checkLogin.php?firstName=" + _txtUserName.text +
-            "&password=" + _txtPassword.text;
+        var url = "login/checkLogin.php?firstName=" + _txtUserName.text + "&password=" + _txtPassword.text;
         final response = await http.get(Uri.parse(serverPath + url));
         print(response);
         print(serverPath + url);
@@ -122,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
             .result == 0) {
           print("SharedPreferences 0");
           var uti = new Utils();
-          uti.ShowMyDialog(context, "", "ת.ז ו/או הסיסמה שגויים");
+          uti.ShowMyDialog(context, "", "שם משתמש ו/או הסיסמה שגויים");
         }
         else {
           SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -135,9 +134,13 @@ class _MyHomePageState extends State<MyHomePage> {
           await prefs.setInt('companyID', checkLoginModel
               .fromJson(jsonDecode(response.body))
               .companyID!);
+          await prefs.setInt('DegreeID', checkLoginModel
+              .fromJson(jsonDecode(response.body))
+              .DegreeID!);
 
           await prefs.setString('userName', _txtUserName.text);
           await prefs.setString('password', _txtPassword.text);
+
 
 
 
@@ -157,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      HomepageworkersScreen(title: "register")),
+                      HomepageworkersScreen(title: "HomePage")),
             );
           }
         }

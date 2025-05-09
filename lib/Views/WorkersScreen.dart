@@ -20,8 +20,8 @@ class WorkersScreen extends StatefulWidget {
 class WorkersScreenPageState extends State<WorkersScreen> {
 
 List<UserModel> listofusers=[
-  UserModel(FirstName: 'a',Degree: 'a'),
-  UserModel(FirstName: 'b',Degree: 'b'),
+  UserModel(FirstName: 'a',DegreeID: 2),
+  UserModel(FirstName: 'b',DegreeID: 1),
 ];
 
   @override

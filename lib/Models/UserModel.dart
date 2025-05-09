@@ -14,11 +14,12 @@ class UserModel {
     this.City="",
     //this.BirthDate=null,
     this.Email="",
-    this.Degree="",
+    this.DegreeID=0,
     this.University="",
     this.Password="",
     this.userType=2,
     this.companyID=0,
+    this.userID=0,
 
   });
 
@@ -27,12 +28,12 @@ class UserModel {
   String City;
   //DateTime? BirthDate;
   String Email;
-  String Degree;
+  int DegreeID;
   String University;
   String Password;
   int userType;
   int companyID;
-
+int userID;
   factory UserModel.fromJson(Map<String, dynamic>json) =>
       UserModel(
         FirstName: json["firstName"],
@@ -42,6 +43,8 @@ class UserModel {
         //University: json["email"],
         Password: json["password"],
         companyID: json["companyID"]??0,
+          DegreeID: json["DegreeID"]??0,
+        userID: json["userID"]??0,
 
 
       );
@@ -53,7 +56,7 @@ class UserModel {
         "City": City,
         //"BirthDate": BirthDate,
         "Email": Email,
-        "Degree": Degree,
+        "DegreeID": DegreeID,
         "Uninversity": University,
         "Password": Password,
         "userType": userType,

@@ -29,7 +29,7 @@ class UsersappliedforworkScreenPageState extends State<UsersappliedforworkScreen
 
 
   Future getUsersApplied() async {
-    var url = "/User/getUsersApplied.php?jobID="+ widget.jb.jobID;
+    var url = "/usersApplied/getUsersApplied.php?jobID="+ widget.jb.jobID;
     print(serverPath + url);
 
     final response = await http.get(Uri.parse(serverPath + url));
@@ -42,89 +42,119 @@ class UsersappliedforworkScreenPageState extends State<UsersappliedforworkScreen
     }
     return arr;
   }
+  Future deleteUserApplied(UserModel us) async {
+    var url = "/usersApplied/deleteUserApplied.php?jobID="+ widget.jb.jobID + "&userID=" + us.userID.toString();
+    print(serverPath + url);
+
+    final response = await http.get(Uri.parse(serverPath + url));
+    print(response.body);
+    print(serverPath + url);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => UsersappliedforworkScreen(title: 'Users Applied', jb: widget.jb)),
+    );
+  }
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: <Widget>[
-        ],
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(widget.title, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Theme.of(context).colorScheme.onPrimary,
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: FutureBuilder(
         future: getUsersApplied(),
         builder: (context, projectSnap) {
           if (projectSnap.hasData) {
             if (projectSnap.data.length == 0) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * 2,
-                 child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'אין תוצאות',
-                    style: TextStyle(fontSize: 23, color: Colors.black),
-                  ),
+              return Center(
+                child: Text(
+                  'אין תוצאות',
+                  style: TextStyle(fontSize: 23, color: Theme.of(context).colorScheme.onBackground),
                 ),
               );
             } else {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: projectSnap.data.length,
-                      itemBuilder: (context, index) {
-                        UserModel project = projectSnap.data[index];
-
-                        return Card(
-                          child: ListTile(
-                            onTap: () {
-                              /*Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JobDetailsScreen(title:"jobdetails", jb:project),
+              return ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: projectSnap.data.length,
+                itemBuilder: (context, index) {
+                  UserModel user = projectSnap.data[index];
+                  return Card(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(16.0),
+                      title: Text(
+                        user.FirstName ?? '',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                      subtitle: Text(
+                        user.Email != null ? "[${user.Email}]" : '',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                        ),
+                      ),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () {
+                          // هنا تقدر تضيف منطق الحذف
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: const Text("هل أنت متأكد؟"),
+                              content: const Text("سيتم حذف هذا المستخدم من الطلبات."),
+                              actions: [
+                                TextButton(
+                                  child: const Text("إلغاء"),
+                                  onPressed: () => Navigator.pop(context),
                                 ),
-                              );*/
-                            },
-                            title: Text(
-                              project.FirstName!.toString(),
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                                TextButton(
+                                  child: const Text("حذف", style: TextStyle(color: Colors.red)),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    deleteUserApplied(user);
+                                  },
+                                ),
+                              ],
                             ),
-                            subtitle: Text(
-                              "[" + project.Email! + "]" + "\n",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            isThreeLine: false,
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  );
+                },
               );
             }
           } else if (projectSnap.hasError) {
-            print(projectSnap.error);
             return Center(
-                child: Text('שגיאה, נסה שוב',
-                    style:
-                    TextStyle(fontSize: 22, fontWeight: FontWeight.bold)));
+              child: Text(
+                'שגיאה, נסה שוב',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.red),
+              ),
+            );
           }
-          return Center(
-            child: new CircularProgressIndicator(
-              color: Colors.red,
-            ),
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.deepPurple),
           );
         },
       ),
     );
   }
+
+
 }
 
 
