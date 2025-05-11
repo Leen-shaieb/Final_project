@@ -54,6 +54,19 @@ class UsersappliedforworkScreenPageState extends State<UsersappliedforworkScreen
       MaterialPageRoute(builder: (context) => UsersappliedforworkScreen(title: 'Users Applied', jb: widget.jb)),
     );
   }
+  Future acceptUser(UserModel us) async {
+    var url = "/usersApplied/acceptUser.php?jobID=" + widget.jb.jobID + "&userID=" + us.userID.toString();
+    print(serverPath + url);
+
+    final response = await http.get(Uri.parse(serverPath + url));
+    print(response.body);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => UsersappliedforworkScreen(title: 'Users Applied', jb: widget.jb)),
+    );
+  }
+
   @override
   @override
   Widget build(BuildContext context) {
@@ -107,32 +120,63 @@ class UsersappliedforworkScreenPageState extends State<UsersappliedforworkScreen
                           color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                         ),
                       ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.red),
-                        onPressed: () {
-                          // هنا تقدر تضيف منطق الحذف
-                          showDialog(
-                            context: context,
-                            builder: (_) => AlertDialog(
-                              title: const Text("هل أنت متأكد؟"),
-                              content: const Text("سيتم حذف هذا المستخدم من الطلبات."),
-                              actions: [
-                                TextButton(
-                                  child: const Text("إلغاء"),
-                                  onPressed: () => Navigator.pop(context),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.check_circle, color: Colors.green),
+                            onPressed: () {
+                              // تنفيذ قبول المستخدم هنا
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: const Text("قبول المتقدِّم"),
+                                  content: const Text("هل تريد قبول هذا المستخدم للوظيفة؟"),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text("إلغاء"),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                    TextButton(
+                                      child: const Text("قبول", style: TextStyle(color: Colors.green)),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        acceptUser(user); // تنفذ دالة القبول
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                TextButton(
-                                  child: const Text("حذف", style: TextStyle(color: Colors.red)),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    deleteUserApplied(user);
-                                  },
+                              );
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: const Text("هل أنت متأكد؟"),
+                                  content: const Text("سيتم حذف هذا المستخدم من الطلبات."),
+                                  actions: [
+                                    TextButton(
+                                      child: const Text("إلغاء"),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                    TextButton(
+                                      child: const Text("حذف", style: TextStyle(color: Colors.red)),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        deleteUserApplied(user);
+                                      },
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          );
-                        },
+                              );
+                            },
+                          ),
+                        ],
                       ),
+
                     ),
                   );
                 },

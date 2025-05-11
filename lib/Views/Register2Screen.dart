@@ -1,7 +1,9 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Utils/Utils.dart';
 import 'package:final_project/Utils/clientConfig.dart';
-import 'package:final_project/Views/HomePageScreen.dart';
+import 'package:final_project/Views/HomePageWorkersScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,15 +18,16 @@ class Register2Screen extends StatefulWidget {
   final UserModel lastStepUser;
 
   @override
-  State<Register2Screen> createState() => _Register2ScreenPageState();
+  State<Register2Screen> createState() => _Register2ScreenState();
 }
 
-class _Register2ScreenPageState extends State<Register2Screen> {
+class _Register2ScreenState extends State<Register2Screen> {
   final _txtDegree = TextEditingController();
   final _txtUniversity = TextEditingController();
   final _txtPassword = TextEditingController();
   final _txtRePassword = TextEditingController();
-  final _txtcv = TextEditingController();
+
+  String? _cvFilePath;
 
   late UserModel _user;
 
@@ -34,15 +37,29 @@ class _Register2ScreenPageState extends State<Register2Screen> {
     _user = widget.lastStepUser;
   }
 
+  Future<void> pickCVFile() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result != null && result.files.single.path != null) {
+      setState(() {
+        _cvFilePath = result.files.single.path!;
+      });
+    }
+  }
+
   Future<void> insertUser(UserModel user) async {
-    final url = "User/insertUser.php?firstName=${user.FirstName}&lastName=${user.LastName}&email=${user.Email}&password=${user.Password}&userType=2";
+    final url =
+        "User/insertUser.php?firstName=${user.FirstName}&lastName=${user.LastName}&email=${user.Email}&password=${user.Password}&userType=2";
     print(serverPath + url);
 
     await http.get(Uri.parse(serverPath + url));
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => Homepagescreen(title: 'HomePage')),
+      MaterialPageRoute(builder: (context) => HomepageworkersScreen(title: 'HomePage')),
     );
   }
 
@@ -56,7 +73,6 @@ class _Register2ScreenPageState extends State<Register2Screen> {
 
   void updateUser() {
     _user
-      //..DegreeID = _txtDegree.value
       ..University = _txtUniversity.text
       ..Password = _txtPassword.text;
   }
@@ -78,20 +94,45 @@ class _Register2ScreenPageState extends State<Register2Screen> {
     );
   }
 
+  Widget buildCVPicker() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('CV', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        const SizedBox(height: 8),
+        ElevatedButton(
+          onPressed: pickCVFile,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.grey[300],
+            foregroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          child: Text(_cvFilePath != null
+              ? 'Selected: ${_cvFilePath!.split('/').last}'
+              : 'Choose PDF File'),
+        ),
+        const SizedBox(height: 15),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: Text(widget.title),
+        title: Text(widget.title, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary)),
       ),
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             buildTextField('Degree', _txtDegree),
             buildTextField('University', _txtUniversity),
-            buildTextField('C.V', _txtcv),
+            buildCVPicker(),
             buildTextField('Password', _txtPassword, isPassword: true),
             buildTextField('Retype Password', _txtRePassword, isPassword: true),
             const SizedBox(height: 20),
@@ -103,7 +144,12 @@ class _Register2ScreenPageState extends State<Register2Screen> {
                 }
               },
               style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               child: const Text('Register', style: TextStyle(fontSize: 18)),
             ),

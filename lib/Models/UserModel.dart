@@ -20,13 +20,14 @@ class UserModel {
     this.userType=2,
     this.companyID=0,
     this.userID=0,
+    this.CV="",
 
   });
 
   String FirstName;
   String LastName;
   String City;
-  //DateTime? BirthDate;
+ String CV;
   String Email;
   int DegreeID;
   String University;
@@ -45,7 +46,7 @@ int userID;
         companyID: json["companyID"]??0,
           DegreeID: json["DegreeID"]??0,
         userID: json["userID"]??0,
-
+      CV: json["CV"]??"",
 
       );
 

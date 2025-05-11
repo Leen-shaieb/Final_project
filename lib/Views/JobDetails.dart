@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Utils/clientConfig.dart';
 import 'package:http/http.dart' as http;
+import 'package:final_project/Utils/Utils.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   const JobDetailsScreen({super.key, required this.title, required this.jb});
@@ -23,10 +24,14 @@ class _JobDetailsScreenPageState extends State<JobDetailsScreen> {
     if (token != null) {
       var url = "Job/applyUser.php?userID=$token&jobID=${widget.jb.jobID}";
       await http.get(Uri.parse(serverPath + url));
+      print(serverPath + url);
+      var uti = new Utils();
+      await uti.ShowMyDialog(context, "", "your request has been sent successfully");
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomepageworkersScreen(title: 'Home Page')),
       );
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('User token not found')),
@@ -73,15 +78,6 @@ class _JobDetailsScreenPageState extends State<JobDetailsScreen> {
               const SizedBox(height: 10),
               Text(
                 job.Description ?? 'No Description provided.',
-                style: const TextStyle(fontSize: 18, height: 1.5),
-              ),
-              Text(
-                "JobName:",
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                job.JobName ?? 'No Description provided.',
                 style: const TextStyle(fontSize: 18, height: 1.5),
               ),
               const SizedBox(height: 40),

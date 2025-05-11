@@ -42,9 +42,9 @@ class JobModel {
   factory JobModel.fromJson(Map<String, dynamic> json) {
     return JobModel(
       jobID: json['jobID'] ?? '',
-      companyID: json['companyID'],
+      companyID: json['companyID']??0,
       JobName: json['jobName'],
-      JobNameID: json['jobNameID'],
+      JobNameID: json['jobNameID']??0,
       Location: json['Location'] ?? '',
       Description: json['Description'] ?? '',
     );

@@ -1,39 +1,29 @@
 import 'dart:convert';
+import 'package:final_project/Models/CompanyModel.dart';
 import 'package:final_project/Models/JobModel.dart';
-import 'package:final_project/Models/UserModel.dart';
 import 'package:final_project/Views/AddJobScreen.dart';
-import 'package:final_project/Views/EditProfileScreen.dart';
-import 'package:final_project/Views/JobDetails.dart';
+import 'package:final_project/Views/WorkersScreen.dart';
+import 'package:final_project/Views/UsersAppliedForWork.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:final_project/Utils/clientConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'EditJobScreen.dart';
 
-import 'appliedJobsScreen.dart';
 
-class HomepageworkersScreen extends StatefulWidget {
-  const HomepageworkersScreen({super.key, required this.title});
+class appliedJobsScreen extends StatefulWidget {
+  const appliedJobsScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<HomepageworkersScreen> createState() => _HomepageworkersScreenPageState();
+  State<appliedJobsScreen> createState() => _appliedJobsScreenPageState();
 }
 
-class _HomepageworkersScreenPageState extends State<HomepageworkersScreen> {
-  UserModel us = UserModel();
+class _appliedJobsScreenPageState extends State<appliedJobsScreen> {
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => appliedJobsScreen(title: 'History')));
-    } else if (index == 1) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileScreen(title: 'Edit Profile',profile: us,)));
-    }
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,49 +73,47 @@ class _HomepageworkersScreenPageState extends State<HomepageworkersScreen> {
                         style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                       ),
                     ),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => JobDetailsScreen(title: "Job Details", jb: job),
-                        ),
-                      );
-                    },
-                  ),
 
+                  ),
                 );
               },
             );
           }
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.work), label: 'jobs'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Edit Profile'),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).colorScheme.secondary,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-      ),
+
     );
   }
-}
 
-Future<List<JobModel>> getJobs() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  var ffg= await prefs.getInt("DegreeID");
-  var url = "/Job/getJobs.php?DegreeID=$ffg";
-  print(serverPath + url);
 
-  final response = await http.get(Uri.parse(serverPath + url));
-  if (response.statusCode == 200) {
-    List arr = json.decode(response.body);
-    return arr.map((e) => JobModel.fromJson(e)).toList();
-  } else {
-    throw Exception('Failed to load jobs');
+
+  /* Future<List<JobModel>> getJobs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var ffg= await prefs.getInt("CompanyID");
+    var url = "/Job/getJobsCompany.php?CompanyID=$ffg";
+    print(serverPath + url);
+    final response = await http.get(Uri.parse(serverPath + url));
+    final jobsJson = json.decode(response.body) as List<dynamic>;
+    return jobsJson.map((json) => JobModel.fromJson(json))
+        .where((job) => job.companyID == company.companyID)
+        .toList();
+  }
+}*/
+  Future<List<JobModel>> getJobs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var ffg= await prefs.getInt("token");
+    var url = "/usersApplied/appliedJobs.php?userID=$ffg";
+    print(serverPath + url);
+    print("token from prefs: $ffg");
+    final response = await http.get(Uri.parse(serverPath + url));
+    //print("Response body: ${response.body}");
+
+    if (response.statusCode == 200) {
+      List arr = json.decode(response.body);
+      return arr.map((e) => JobModel.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load jobs');
+    }
   }
 }
+
