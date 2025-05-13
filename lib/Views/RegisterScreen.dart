@@ -1,4 +1,5 @@
 import 'package:final_project/Models/UserModel.dart';
+import 'package:final_project/Utils/Utils.dart';
 import 'package:final_project/Views/Register2Screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,18 +19,28 @@ class _RegisterScreenPageState extends State<RegisterScreen> {
   final _txtEmail = TextEditingController();
 
   void saveStep() {
-    var user = UserModel();
-    user.FirstName = _txtFirstName.text;
-    user.LastName = _txtLastName.text;
-    user.City = _txtCity.text;
-    user.Email = _txtEmail.text;
+    if(_txtFirstName.text.isEmpty||_txtLastName.text.isEmpty||_txtCity.text.isEmpty||_txtEmail.text.isEmpty)
+      {
+        Utils ut=new Utils();
+        ut.ShowMyDialog(context, ' ', 'الرجاء تعبئة جميع الحقول');
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Register2Screen(title: 'Register', lastStepUser: user),
-      ),
-    );
+      }
+
+    else {
+      var user = UserModel();
+      user.FirstName = _txtFirstName.text;
+      user.LastName = _txtLastName.text;
+      user.City = _txtCity.text;
+      user.Email = _txtEmail.text;
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              Register2Screen(title: 'Register', lastStepUser: user),
+        ),
+      );
+    }
   }
 
   Widget buildTextField(String label, TextEditingController controller) {

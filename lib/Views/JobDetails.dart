@@ -26,7 +26,7 @@ class _JobDetailsScreenPageState extends State<JobDetailsScreen> {
       await http.get(Uri.parse(serverPath + url));
       print(serverPath + url);
       var uti = new Utils();
-      await uti.ShowMyDialog(context, "", "your request has been sent successfully");
+      await uti.ShowMyDialog(context, "", "لقد تم تقديم الطلب بنجاح");
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomepageworkersScreen(title: 'Home Page')),

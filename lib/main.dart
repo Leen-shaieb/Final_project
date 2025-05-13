@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       } on SocketException catch (_) {
         // print('not connected to internet');// print(result);
         var uti = new Utils();
-        uti.ShowMyDialog(context, "אין אינטרנט", "האפליקציה דורשת חיבור לאינטרנט, נא להתחבר בבקשה");
+        uti.ShowMyDialog(context, "لا يوجد اتصال بالانترنت", "تشغيل التطبيق يتطلب اتصال بالانترنت، ارجو الاتصال والمحاولة من جديد");
         return;
       }
     }
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
             .result == 0) {
           print("SharedPreferences 0");
           var uti = new Utils();
-          uti.ShowMyDialog(context, "", "שם משתמש ו/או הסיסמה שגויים");
+          uti.ShowMyDialog(context, "", "اسم المستخدم او كلمة السر غير صحيحات");
         }
         else {
           SharedPreferences prefs = await SharedPreferences.getInstance();
