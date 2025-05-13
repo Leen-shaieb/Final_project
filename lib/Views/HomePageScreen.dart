@@ -174,7 +174,8 @@ Future<List<JobModel>> getJobs() async {
   if (response.statusCode == 200) {
     List arr = json.decode(response.body);
     return arr.map((e) => JobModel.fromJson(e)).toList();
-  } else {
+  }
+  else {
     throw Exception('Failed to load jobs');
   }
 }

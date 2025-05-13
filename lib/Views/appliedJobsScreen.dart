@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'package:final_project/Models/CompanyModel.dart';
 import 'package:final_project/Models/JobModel.dart';
-import 'package:final_project/Views/AddJobScreen.dart';
-import 'package:final_project/Views/WorkersScreen.dart';
-import 'package:final_project/Views/UsersAppliedForWork.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:final_project/Utils/clientConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'EditJobScreen.dart';
+import 'JobDetails.dart';
 
 
 class appliedJobsScreen extends StatefulWidget {
@@ -73,7 +69,15 @@ class _appliedJobsScreenPageState extends State<appliedJobsScreen> {
                         style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                       ),
                     ),
-
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JobDetailsScreen(title: "Job Details", jb: job),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
@@ -87,18 +91,7 @@ class _appliedJobsScreenPageState extends State<appliedJobsScreen> {
 
 
 
-  /* Future<List<JobModel>> getJobs() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var ffg= await prefs.getInt("CompanyID");
-    var url = "/Job/getJobsCompany.php?CompanyID=$ffg";
-    print(serverPath + url);
-    final response = await http.get(Uri.parse(serverPath + url));
-    final jobsJson = json.decode(response.body) as List<dynamic>;
-    return jobsJson.map((json) => JobModel.fromJson(json))
-        .where((job) => job.companyID == company.companyID)
-        .toList();
-  }
-}*/
+
   Future<List<JobModel>> getJobs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var ffg= await prefs.getInt("token");

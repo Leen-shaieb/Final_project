@@ -51,8 +51,7 @@ class _Register2ScreenState extends State<Register2Screen> {
   }
 
   Future<void> insertUser(UserModel user) async {
-    final url =
-        "User/insertUser.php?firstName=${user.FirstName}&lastName=${user.LastName}&email=${user.Email}&password=${user.Password}&userType=2";
+    final url = "User/insertUser.php?firstName=${user.FirstName}&lastName=${user.LastName}&email=${user.Email}&password=${user.Password}&userType=2&city=${user.City}&Degree=${user.Degree}";
     print(serverPath + url);
 
     await http.get(Uri.parse(serverPath + url));
@@ -74,7 +73,8 @@ class _Register2ScreenState extends State<Register2Screen> {
   void updateUser() {
     _user
       ..University = _txtUniversity.text
-      ..Password = _txtPassword.text;
+      ..Password = _txtPassword.text
+      ..Degree=_txtDegree.text;
   }
 
   Widget buildTextField(String label, TextEditingController controller, {bool isPassword = false}) {

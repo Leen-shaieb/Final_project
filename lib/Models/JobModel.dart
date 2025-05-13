@@ -20,24 +20,6 @@ class JobModel {
 
 
 
-  /*
-  factory JobModel.fromJson(Map<String, dynamic> json) => JobModel(
-        JobTitle: json["jobName"],
-        Location: json["Location"],
-        Description: json["Description"],
-      );
-*/
-
-  /*factory JobModel.fromJson(Map<String, dynamic> json) {
-    return JobModel(
-      jobID: json['jobID'],
-      companyID: json['companyID'],
-      JobName: json['jobName'],
-      JobNameID: json['jobNameID'],
-      Location: json['Location'],
-      Description: json['Description'],
-    );
-  }*/
 
   factory JobModel.fromJson(Map<String, dynamic> json) {
     return JobModel(

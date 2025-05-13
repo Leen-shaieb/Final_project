@@ -21,6 +21,7 @@ class UserModel {
     this.companyID=0,
     this.userID=0,
     this.CV="",
+    this.Degree="",
 
   });
 
@@ -34,11 +35,12 @@ class UserModel {
   String Password;
   int userType;
   int companyID;
+  String Degree;
 int userID;
   factory UserModel.fromJson(Map<String, dynamic>json) =>
       UserModel(
         FirstName: json["firstName"],
-        LastName: json["firstName"] ,
+        LastName: json["LastName"]??"" ,
         Email: json["email"],
         //Degree: json["email"],
         //University: json["email"],
@@ -54,7 +56,7 @@ int userID;
       {
         "FirstName":FirstName,
         "LastName": LastName,
-        "City": City,
+        "city": City,
         //"BirthDate": BirthDate,
         "Email": Email,
         "DegreeID": DegreeID,
@@ -62,82 +64,10 @@ int userID;
         "Password": Password,
         "userType": userType,
         " companyID":  companyID,
+        "Degree":Degree,
 
       };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-  JobMode(String JobTitle,String Location)
-      {
-        this.JobTitle=JobTitle;
-      this.Location=Location;
-      }
- */
 }
 

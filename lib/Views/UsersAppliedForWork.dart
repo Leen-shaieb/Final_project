@@ -119,8 +119,7 @@ class UsersappliedforworkScreenPageState extends State<UsersappliedforworkScreen
                           fontWeight: FontWeight.w500,
                           color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
                         ),
-                      ),
-                      trailing: Row(
+                      ), trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
@@ -148,8 +147,7 @@ class UsersappliedforworkScreenPageState extends State<UsersappliedforworkScreen
                                 ),
                               );
                             },
-                          ),
-                          IconButton(
+                          ),IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
                               showDialog(

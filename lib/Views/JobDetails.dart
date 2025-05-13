@@ -22,7 +22,7 @@ class _JobDetailsScreenPageState extends State<JobDetailsScreen> {
     int? token = prefs.getInt("token");
 
     if (token != null) {
-      var url = "Job/applyUser.php?userID=$token&jobID=${widget.jb.jobID}";
+      var url = "usersApplied/applyUser.php?userID=$token&jobID=${widget.jb.jobID}";
       await http.get(Uri.parse(serverPath + url));
       print(serverPath + url);
       var uti = new Utils();
