@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Views/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:final_project/Utils/clientConfig.dart';
+
+import '../Models/JobNameModel.dart';
 
 class EditJobScreen extends StatefulWidget {
   const EditJobScreen({super.key, required this.title, required this.jb});
@@ -18,6 +22,9 @@ class _EditJobScreenState extends State<EditJobScreen> {
   late TextEditingController _txtJobTitle;
   late TextEditingController _txtLocation;
   late TextEditingController _txtDescription;
+  final _txtTitleJob = TextEditingController();
+
+  int jobNameId=0;
 
   @override
   void initState() {
@@ -46,7 +53,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
     }
 
     final url =
-        "Job/updateJob.php?Description=${_txtDescription.text}&Location=${_txtLocation.text}&jobID=${widget.jb.jobID}";
+        "Job/updateJob.php?jobNameID=${jobNameId}&Description=${_txtDescription.text}&Location=${_txtLocation.text}&jobID=${widget.jb.jobID}";
     print(serverPath + url);
 
     final response = await http.get(Uri.parse(serverPath + url));
@@ -66,6 +73,60 @@ class _EditJobScreenState extends State<EditJobScreen> {
         const SnackBar(content: Text('Error updating job')),
       );
     }
+  }
+  Future<List<JobNameModel>> getJobsName() async {
+    var url = "/JobName/GetJobsName.php";
+    print(serverPath + url);
+
+    final response = await http.get(Uri.parse(serverPath + url));
+
+    if (response.statusCode == 200) {
+      List<JobNameModel> arr = [];
+      for (Map<String, dynamic> i in json.decode(response.body)) {
+        arr.add(JobNameModel.fromJson(i));
+      }
+      return arr;
+    } else {
+      throw Exception('فشل تحميل البيانات');
+    }
+  }
+
+
+  void showJobsBottomSheet() async {
+    List<JobNameModel> jobs = await getJobsName();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.6,
+          maxChildSize: 0.9,
+          builder: (context, scrollController) {
+            return ListView.builder(
+              controller: scrollController,
+              itemCount: jobs.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(jobs[index].JobName!),
+                  onTap: () {
+                    _txtTitleJob.text=jobs[index].JobName!;
+                    jobNameId=jobs[index].JobNameID!;
+                    //  context: jobs[index].JobName!;
+                    Navigator.pop(context);
+                    print('تم اختيار: ${jobs[index].JobName}');
+                  },
+                );
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget buildTextField(String label, TextEditingController controller) {
@@ -96,7 +157,9 @@ class _EditJobScreenState extends State<EditJobScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            buildTextField("Job Title", _txtJobTitle),
+            ElevatedButton(
+              onPressed: showJobsBottomSheet,
+              child: Text('Job Name'),),
             buildTextField("Location", _txtLocation),
             buildTextField("Description", _txtDescription),
             const SizedBox(height: 20),

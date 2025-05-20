@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:final_project/Utils/clientConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'JobDetails.dart';
+import 'JobDetails2.dart';
 
 
 class appliedJobsScreen extends StatefulWidget {
@@ -74,7 +74,7 @@ class _appliedJobsScreenPageState extends State<appliedJobsScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => JobDetailsScreen(title: "Job Details", jb: job),
+                          builder: (context) => JobDetails2Screen(title: "Job Details", jb: job),
                         ),
                       );
                     },

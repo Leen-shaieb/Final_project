@@ -122,6 +122,7 @@ class UsersappliedforworkScreenPageState extends State<UsersappliedforworkScreen
                       ), trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+
                           IconButton(
                             icon: const Icon(Icons.check_circle, color: Colors.green),
                             onPressed: () {
