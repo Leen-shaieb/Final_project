@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:final_project/Models/CompanyModel.dart';
 import 'package:final_project/Models/JobModel.dart';
 import 'package:final_project/Views/AddJobScreen.dart';
-import 'package:final_project/Views/WorkersScreen.dart';
+import 'package:final_project/Views/allJobs.dart';
 import 'package:final_project/Views/UsersAppliedForWork.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -27,7 +27,7 @@ class _HomepagescreenPageState extends State<Homepagescreen> {
     if (index == 0) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => AddJobScreen(title: 'Add Job')));
     } else if (index == 1) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => WorkersScreen(title: 'Workers')));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => allJobsScreen(title: 'Workers')));
     }
     setState(() {
       _selectedIndex = index;
@@ -116,7 +116,7 @@ class _HomepagescreenPageState extends State<Homepagescreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.add), label: 'New Job'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Workers'),
+          BottomNavigationBarItem(icon: Icon(Icons.work), label: 'jobs'),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Theme.of(context).colorScheme.secondary,
